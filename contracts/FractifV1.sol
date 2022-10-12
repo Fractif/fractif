@@ -82,6 +82,10 @@ contract FractifV1 is
     error NotApproved();
     error NotRedeemable();
     error AlreadyDeclaredSold();
+    /**
+     * @notice When two arrays are not the same length.
+     */
+    error LengthNotMatching(uint length1, uint length2);
 
     /**
      * @notice Checks if a coin is whitelisted.
@@ -245,6 +249,13 @@ contract FractifV1 is
         uint256[] memory amounts,
         bytes memory data
     ) public onlyRole(MINTER_ROLE) {
+        if (ids.length != amounts.length) {
+            revert LengthNotMatching(ids.length, amounts.length);
+        }
+        for (uint i = 0; i < ids.length; i++) {
+            tokenInitialSupply[ids[i]] = amounts[i];
+            tokenSelloutPrice[ids[i]] = 0;
+        }
         _mintBatch(to, ids, amounts, data);
     }
 
