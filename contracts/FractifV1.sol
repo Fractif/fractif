@@ -8,6 +8,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./ERC2981.sol";
 
 /// @custom:security-contact anthony@fractif.com
 contract FractifV1 is
@@ -16,7 +17,8 @@ contract FractifV1 is
     AccessControlUpgradeable,
     PausableUpgradeable,
     ERC1155BurnableUpgradeable,
-    ERC1155SupplyUpgradeable
+    ERC1155SupplyUpgradeable,
+    ERC2981
 {
     /**
      * @notice The role that can set the URI.
@@ -271,10 +273,20 @@ contract FractifV1 is
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 
+    /// @notice Allows to set the royalties on the contract
+    /// @param recipient the royalties recipient
+    /// @param value royalties value (between 0 and 10000)
+    function setRoyalties(address recipient, uint256 value) 
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        _setRoyalties(recipient, value);
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC1155Upgradeable, AccessControlUpgradeable)
+        override(ERC1155Upgradeable, AccessControlUpgradeable, ERC2981Base)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
