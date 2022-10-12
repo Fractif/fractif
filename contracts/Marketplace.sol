@@ -17,6 +17,12 @@ contract Marketplace is
 {
     using Counters for Counters.Counter;
 
+    enum ListingStatus {
+        ACTIVE,
+        SOLD,
+        CANCELLED
+    }
+
     /**
      * @notice A listing on the marketplace
      */
@@ -42,13 +48,9 @@ contract Marketplace is
          */
         address seller;
         /**
-         * @notice Sold
+         * @notice Listing state
          */
-        bool sold;
-        /**
-         * @notice Active
-         */
-        bool active;
+        ListingStatus state;
     }
 
     /**
@@ -107,7 +109,7 @@ contract Marketplace is
         if (_price <= 0) {
             revert WrongPrice();
         }
-        if (_tokenId <= 0) {
+        if (_tokenId < 0) {
             revert WrongTokenId();
         }
         if (_amount <= 0) {
@@ -118,17 +120,16 @@ contract Marketplace is
         IERC1155(fractifApp).safeTransferFrom(msg.sender, address(this), _tokenId, _amount, "");
 
         // Then we create our listing
-        listingCounter.increment();
         uint256 listingId = listingCounter.current();
+        listingCounter.increment();
 
         listings[listingId] = Listing({
             id: listingId,
             tokenId: _tokenId,
             price: _price,
             seller: msg.sender,
-            sold: false,
             amount: _amount,
-            active: true
+            state: ListingStatus.ACTIVE
         });
 
         // TODO: Emit listing created event
@@ -152,9 +153,36 @@ contract Marketplace is
         );
 
         // Then we remove the listing
-        listings[_listingId].active = false;
+        listings[_listingId].state = ListingStatus.CANCELLED;
 
         // TODO: Emit listing deactivated event
+    }
+
+    /**
+     * @notice Buy a listing
+     */
+    function buyListing(uint256 _listingId) public payable {
+        if (listings[_listingId].state != ListingStatus.ACTIVE) {
+            revert Unauthorized();
+        }
+        if (listings[_listingId].price * listings[_listingId].amount != msg.value) {
+            revert Unauthorized();
+        }
+
+        // First of all we need to transfer the tokens to the buyer
+        IERC1155(fractifApp).safeTransferFrom(
+            address(this), 
+            msg.sender, 
+            listings[_listingId].tokenId, 
+            listings[_listingId].amount, 
+            ""
+        );
+
+        // Then we need to transfer the money to the seller
+        payable(listings[_listingId].seller).transfer(msg.value);
+
+        // Then we remove the listing
+        listings[_listingId].state = ListingStatus.SOLD;
     }
 
     function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
