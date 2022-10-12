@@ -40,6 +40,7 @@ describe('Marketplace', () => {
             expect(listing.price).to.equal(BigNumber.from(1))
             expect(listing.amount).to.equal(10)
             expect(listing.state).to.equal(MarketplaceListingState.Active)
+            expect(await fractifInstance.balanceOf(buyer1.address, item.id)).to.equal(2000 - 10)
         }
         
         const deactivateListing = async () => {
@@ -56,5 +57,27 @@ describe('Marketplace', () => {
             await listItem()
             await deactivateListing()
         })
+
+        it('should be able to buy a listing', async () => {
+            await listItem()
+            let listing = await marketplaceInstance.listings(0)
+            const price = listing.price.mul(listing.amount)
+            await marketplaceInstance.connect(buyer2).buyListing(0, { value: price })
+            expect(await fractifInstance.balanceOf(buyer2.address, item.id)).to.equal(3000 + 10)
+            listing = await marketplaceInstance.listings(0)
+            expect(listing.state).to.equal(MarketplaceListingState.Sold)
+        })
+
+        it('should be able to reactivate a listing', async () => {})
+
+        it('should fail to list an item that is not owned by the seller', async () => {})
+
+        it('should fail to deactivate a listing that is not owned by the seller', async () => {})
+
+        it('should fail to reactivate a listing that is not owned by the seller', async () => {})
+
+        it('should fail to buy a listing that is not active', async () => {})
+
+        it('should fail to buy a listing at a price lower than the listing price', async () => {})
     })
 })

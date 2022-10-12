@@ -82,6 +82,14 @@ contract Marketplace is
      * @notice Unauthorized error
      */
     error Unauthorized();
+    /**
+     * @notice Error triggered whenever the listing is not active
+     */
+    error ListingNotActive();
+    /**
+     * @notice Error triggered when the amount sent is insufficient
+     */
+    error InsufficientAmount();
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -163,10 +171,10 @@ contract Marketplace is
      */
     function buyListing(uint256 _listingId) public payable {
         if (listings[_listingId].state != ListingStatus.ACTIVE) {
-            revert Unauthorized();
+            revert ListingNotActive();
         }
         if (listings[_listingId].price * listings[_listingId].amount != msg.value) {
-            revert Unauthorized();
+            revert InsufficientAmount();
         }
 
         // First of all we need to transfer the tokens to the buyer
@@ -179,9 +187,9 @@ contract Marketplace is
         );
 
         // Then we need to transfer the money to the seller
-        payable(listings[_listingId].seller).transfer(msg.value);
+        address(msg.sender).call{value: msg.value}("");
 
-        // Then we remove the listing
+        // Then set the listing as sold
         listings[_listingId].state = ListingStatus.SOLD;
     }
 
