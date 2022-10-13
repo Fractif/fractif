@@ -1,5 +1,7 @@
 import { BigNumber } from "ethers"
 import { ethers } from "hardhat";
+import { FakeERC20, FractifV1 } from "../types/contracts";
+import { expect } from "chai"
 
 export const decimals: BigNumber = BigNumber.from(18);
 export const decimalPowed: BigNumber = BigNumber.from(10).pow(decimals);
@@ -20,15 +22,32 @@ export type Item = {
     }
 }
 
-export const genItemForSale = (id: number): Item => {
+export const genItemForSale = (id: number, quantity?: number): Item => {
     return {
         id,
         name: `My great bag #${id}`,
         price: toBnPowed(100),
-        quantity: 10000,
+        quantity: quantity ? quantity : 10000,
         sellout: {
             ether: ethers.utils.parseEther("1").toString(),
             fakeErc20: toBnPowed(1000).toString()
         } 
     }
+}
+
+/**
+ * 
+ * @param amount of tokens
+ * @param account that allows the contract to spend the amount of tokens
+ */
+ export const allowFractifToSpendFakeToken = async (
+    fakeToken: FakeERC20, 
+    fractifInstance: FractifV1,
+    amount: string | number | BigNumber, 
+    account: string
+) => {
+    await fakeToken.approve(fractifInstance.address, amount, { from: account });
+    const allowance = await fakeToken.allowance(account, fractifInstance.address);
+    expect(allowance, `FractifV1 should be allowed to spend '${amount}' 'fake-tokens' of account 0`)
+        .to.equal(amount);
 }

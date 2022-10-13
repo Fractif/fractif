@@ -8,6 +8,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./ERC2981.sol";
 
 /// @custom:security-contact anthony@fractif.com
 contract FractifV1 is
@@ -16,7 +17,8 @@ contract FractifV1 is
     AccessControlUpgradeable,
     PausableUpgradeable,
     ERC1155BurnableUpgradeable,
-    ERC1155SupplyUpgradeable
+    ERC1155SupplyUpgradeable,
+    ERC2981
 {
     /**
      * @notice The role that can set the URI.
@@ -82,6 +84,10 @@ contract FractifV1 is
     error NotApproved();
     error NotRedeemable();
     error AlreadyDeclaredSold();
+    /**
+     * @notice When two arrays are not the same length.
+     */
+    error LengthNotMatching(uint length1, uint length2);
 
     /**
      * @notice Checks if a coin is whitelisted.
@@ -245,6 +251,13 @@ contract FractifV1 is
         uint256[] memory amounts,
         bytes memory data
     ) public onlyRole(MINTER_ROLE) {
+        if (ids.length != amounts.length) {
+            revert LengthNotMatching(ids.length, amounts.length);
+        }
+        for (uint i = 0; i < ids.length; i++) {
+            tokenInitialSupply[ids[i]] = amounts[i];
+            tokenSelloutPrice[ids[i]] = 0;
+        }
         _mintBatch(to, ids, amounts, data);
     }
 
@@ -260,10 +273,20 @@ contract FractifV1 is
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 
+    /// @notice Allows to set the royalties on the contract
+    /// @param recipient the royalties recipient
+    /// @param value royalties value (between 0 and 10000)
+    function setRoyalties(address recipient, uint256 value) 
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        _setRoyalties(recipient, value);
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC1155Upgradeable, AccessControlUpgradeable)
+        override(ERC1155Upgradeable, AccessControlUpgradeable, ERC2981Base)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
