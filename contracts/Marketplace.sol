@@ -123,9 +123,6 @@ contract Marketplace is
         if (_amount <= 0) {
             revert WrongAmount();
         }
-        if (IERC1155(fractifApp).balanceOf(msg.sender, _tokenId) < _amount) {
-            revert Unauthorized();
-        }
 
         // First of all we need to transfer the tokens to the marketplace
         IERC1155(fractifApp).safeTransferFrom(msg.sender, address(this), _tokenId, _amount, "");

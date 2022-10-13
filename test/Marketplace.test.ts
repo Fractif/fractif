@@ -130,9 +130,8 @@ describe("Marketplace", () => {
 				marketplaceInstance
 					.connect(buyer4)
 					.createListing(item.id, BigNumber.from(1), 10)
-			).to.be.revertedWithCustomError(
-				marketplaceInstance,
-				"Unauthorized"
+			).to.be.revertedWith(
+				"ERC1155: insufficient balance for transfer"
 			);
 		});
 
