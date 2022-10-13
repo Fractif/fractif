@@ -90,6 +90,11 @@ describe('Marketplace', () => {
             await expect(marketplaceInstance.connect(buyer2).buyListing(0, { value: price })).to.be.reverted;
         })
 
-        it('should fail to buy a listing at a price lower than the listing price', async () => {})
+        it('should fail to buy a listing at a price lower than the listing price', async () => {
+            await listItem()
+            const listing = await marketplaceInstance.listings(0)
+            const price = listing.price.mul(listing.amount).sub(1)
+            await expect(marketplaceInstance.connect(buyer2).buyListing(0, { value: price })).to.be.reverted;
+        })
     })
 })
