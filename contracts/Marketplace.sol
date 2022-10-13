@@ -166,6 +166,18 @@ contract Marketplace is
         // TODO: Emit listing deactivated event
     }
 
+    function reactivateListing(uint256 _listingId) public {
+        if (listings[_listingId].seller != msg.sender) {
+            revert Unauthorized();
+        }
+
+        // Re-transfer the tokens to the marketplace
+        IERC1155(fractifApp).safeTransferFrom(msg.sender, address(this), listings[_listingId].tokenId, listings[_listingId].amount, "");
+
+
+        listings[_listingId].state = ListingStatus.ACTIVE;
+    }
+
     /**
      * @notice Buy a listing
      */
