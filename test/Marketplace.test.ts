@@ -49,6 +49,12 @@ describe('Marketplace', () => {
             expect(listing.state).to.equal(MarketplaceListingState.Deactivated)
         }
 
+        const reactivateListing = async () => {
+            await marketplaceInstance.connect(buyer1).reactivateListing(0)
+            const listing = await marketplaceInstance.listings(0)
+            expect(listing.state).to.equal(MarketplaceListingState.Active)
+        }
+
         it('should be able to list a new item', async () => {
             await listItem()
         })
@@ -68,7 +74,12 @@ describe('Marketplace', () => {
             expect(listing.state).to.equal(MarketplaceListingState.Sold)
         })
 
-        it('should be able to reactivate a listing', async () => {})
+        it('should be able to reactivate a listing', async () => {
+            await listItem()
+            await deactivateListing()
+            await reactivateListing()
+
+        })
 
         it('should fail to list an item that is not owned by the seller', async () => {
             await fractifInstance.connect(buyer4).setApprovalForAll(marketplaceInstance.address, true)
@@ -80,7 +91,11 @@ describe('Marketplace', () => {
             await expect(marketplaceInstance.connect(buyer2).deactivateListing(0)).to.be.reverted
         })
 
-        it('should fail to reactivate a listing that is not owned by the seller', async () => {})
+        it('should fail to reactivate a listing that is not owned by the seller', async () => {
+            await listItem()
+            await deactivateListing()
+            await expect(marketplaceInstance.connect(buyer2).reactivateListing(0)).to.be.reverted
+        })
 
         it('should fail to buy a listing that is not active', async () => {
             await listItem()
