@@ -11,11 +11,11 @@ describe('Marketplace', () => {
     let marketplaceInstance: Marketplace
     let fractifInstance: FractifV1
     let item: Item
-    let owner: SignerWithAddress, buyer1: SignerWithAddress, buyer2: SignerWithAddress, buyer3: SignerWithAddress;
+    let owner: SignerWithAddress, buyer1: SignerWithAddress, buyer2: SignerWithAddress, buyer3: SignerWithAddress, buyer4: SignerWithAddress;
 
 
     beforeEach(async () => {
-        [owner, buyer1, buyer2, buyer3] = await ethers.getSigners();
+        [owner, buyer1, buyer2, buyer3, buyer4] = await ethers.getSigners();
         const FractifV1 = await ethers.getContractFactory('FractifV1')
         fractifInstance = await upgrades.deployProxy(FractifV1) as FractifV1
         const address = '0x0000'
@@ -70,7 +70,10 @@ describe('Marketplace', () => {
 
         it('should be able to reactivate a listing', async () => {})
 
-        it('should fail to list an item that is not owned by the seller', async () => {})
+        it('should fail to list an item that is not owned by the seller', async () => {
+            fractifInstance.connect(buyer4).setApprovalForAll(marketplaceInstance.address, true)
+            await expect(marketplaceInstance.connect(buyer4).createListing(item.id, BigNumber.from(1), 10)).to.be.reverted
+        })
 
         it('should fail to deactivate a listing that is not owned by the seller', async () => {})
 
