@@ -112,6 +112,16 @@ describe("Marketplace", () => {
 			await reactivateListing();
 		});
 
+		it("should fail to deactivate a listing that is not owned by the seller", async () => {
+			await listItem();
+			await expect(
+				marketplaceInstance.connect(buyer2).deactivateListing(0)
+			).to.be.revertedWithCustomError(
+				marketplaceInstance,
+				"Unauthorized"
+			);
+		});
+
 		it("should fail to list an item that is not owned by the seller", async () => {
 			await fractifInstance
 				.connect(buyer4)
