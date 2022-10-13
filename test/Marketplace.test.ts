@@ -79,7 +79,13 @@ describe('Marketplace', () => {
 
         it('should fail to reactivate a listing that is not owned by the seller', async () => {})
 
-        it('should fail to buy a listing that is not active', async () => {})
+        it('should fail to buy a listing that is not active', async () => {
+            await listItem()
+            await deactivateListing()
+            const listing = await marketplaceInstance.listings(0)
+            const price = listing.price.mul(listing.amount)
+            await expect(marketplaceInstance.connect(buyer2).buyListing(0, { value: price })).to.be.reverted;
+        })
 
         it('should fail to buy a listing at a price lower than the listing price', async () => {})
     })
