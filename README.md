@@ -1,4 +1,4 @@
-# Fractif asset token template
+# Fractif App
 
 ## Contracts
 - `FractifV1.sol`: the Fractif ERC1155 smart contract
@@ -17,6 +17,7 @@ Holders will be able to vote onchain for modifications to Fractif smart contract
 ```sh
 npm i
 ```
+
 ### Setup
 - Setup env keys
 ```sh
@@ -27,6 +28,7 @@ ALCHEMY_GOERLI_URL=....
 ```sh
 npm run dev
 ```
+
 ### Testing
 - Run in shell
 ```sh
@@ -58,3 +60,17 @@ networks: {
     }
 }
 ```
+- Run specific test
+```sh
+npx hardhat test --grep "<pattern>"
+```
+### Coverage
+- Run in shell
+```sh
+npx hardhat coverage
+```
+or
+```sh
+npm run coverage
+```
+
