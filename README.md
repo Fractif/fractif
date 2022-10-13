@@ -1,13 +1,29 @@
-# Sample Hardhat Project
+# Fractif App
+## Contracts
+- `FractifV1.sol`: the Fractif ERC1155 smart contract
+- `Marketplace.sol`: the Fractif Marketplace Smart contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+## Development
+### Requirements
+```sh
+npm i
 ```
+### Testing
+- Run in shell
+```sh
+npx hardhat test
+```
+- Run specific test
+```sh
+npx hardhat test --grep "<pattern>"
+```
+### Coverage
+- Run in shell
+```sh
+npx hardhat coverage
+```
+or
+```sh
+npm run coverage
+```
+
