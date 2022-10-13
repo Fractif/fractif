@@ -71,11 +71,14 @@ describe('Marketplace', () => {
         it('should be able to reactivate a listing', async () => {})
 
         it('should fail to list an item that is not owned by the seller', async () => {
-            fractifInstance.connect(buyer4).setApprovalForAll(marketplaceInstance.address, true)
+            await fractifInstance.connect(buyer4).setApprovalForAll(marketplaceInstance.address, true)
             await expect(marketplaceInstance.connect(buyer4).createListing(item.id, BigNumber.from(1), 10)).to.be.reverted
         })
 
-        it('should fail to deactivate a listing that is not owned by the seller', async () => {})
+        it('should fail to deactivate a listing that is not owned by the seller', async () => {
+            await listItem()
+            await expect(marketplaceInstance.connect(buyer2).deactivateListing(0)).to.be.reverted
+        })
 
         it('should fail to reactivate a listing that is not owned by the seller', async () => {})
 
