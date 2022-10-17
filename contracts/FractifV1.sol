@@ -38,7 +38,8 @@ contract FractifV1 is
      * @notice The role that allows setting the sellout price.
      * @dev The role should be granted to the `Governance` contract and to the owner.
      */
-    bytes32 public constant SELLOUT_SETTER_ROLE = keccak256("SELLOUT_SETTER_ROLE");
+    bytes32 public constant SELLOUT_SETTER_ROLE =
+        keccak256("SELLOUT_SETTER_ROLE");
 
     /**
      * @notice Tokens Initial Supply on minting
@@ -55,6 +56,10 @@ contract FractifV1 is
      */
     mapping(uint256 => address) public tokenDepositedCoin;
     /**
+     * @notice Item tied to the token has been sold.
+     */
+    mapping(uint256 => bool) public sold;
+    /**
      * @notice Whitelisted coins that can be used as pay-back tokens.
      * @dev Initialized with ether under the address 0x00.
      */
@@ -65,7 +70,7 @@ contract FractifV1 is
         _disableInitializers();
     }
 
-    function initialize() initializer public {
+    function initialize() public initializer {
         __ERC1155_init("https://fractif.com/api/metadata/{id}.json");
         __ERC1155Burnable_init();
         __ERC1155Supply_init();
@@ -79,15 +84,34 @@ contract FractifV1 is
         approvedCoins[address(0x00)] = true;
     }
 
+    /**
+     * @notice Contract does not possess enough funds to pay-back token holders.
+     */
     error InsufficientBalance(uint balance, uint refundAmount);
+    /**
+     * @notice The coin used to pay-back token holders is not approved.
+     */
     error CoinNotApproved();
+    /**
+     * @notice Sender is not allowed to complete the operation.
+     */
     error NotApproved();
+    /**
+     * @notice The pay-back isn't reedemable yet.
+     */
     error NotRedeemable();
+    /**
+     * @notice The token has already been set as sold.
+     */
     error AlreadyDeclaredSold();
     /**
      * @notice When two arrays are not the same length.
      */
     error LengthNotMatching(uint length1, uint length2);
+    /**
+     * @notice The sellout price is not set.
+     */
+    error SelloutPriceNotSet();
 
     /**
      * @notice Checks if a coin is whitelisted.
@@ -114,18 +138,72 @@ contract FractifV1 is
         approvedCoins[_coin] = false;
     }
 
+    /**
+     * @notice Get the deposited coin address used to pay-back token holders of a specific tokenId.
+     * @param tokenId The id of the token to get the deposited coin of.
+     */
+    function getDepositedCoin(uint256 tokenId) public view returns (address) {
+        return tokenDepositedCoin[tokenId];
+    }
+
+    /**
+     * @notice Get the initial supply of a token.
+     * @param tokenId The id of the token to get the initial supply of.
+     */
+    function getInitialSupply(uint256 tokenId) public view returns (uint256) {
+        return tokenInitialSupply[tokenId];
+    }
+
+    /**
+     * @notice Set the internal uri of the contract.
+     */
+    function setURI(string memory newuri) public onlyRole(URI_SETTER_ROLE) {
+        _setURI(newuri);
+    }
+
+    /**
+     * @notice Get the sellout price of a token.
+     */
     function getSelloutPrice(uint256 tokenId) public view returns (uint256) {
         return tokenSelloutPrice[tokenId];
     }
 
+    /**
+     * @notice Sets the sellout price of a token.
+     * @dev This function can only be called by the `SELLOUT_SETTER_ROLE` which is mostlikely a governor instance.
+     * @param tokenId The id of the token to set the sellout price of.
+     * @param selloutPrice The price at which the item tied to the token should be sold.
+     * @param depositedCoin The address of the ERC20 coin that is used to pay-back tokens holders.
+     */
     function setSelloutPrice(
         uint256 tokenId,
         uint256 selloutPrice,
         address depositedCoin
-    ) public payable onlyRole(SELLOUT_SETTER_ROLE) returns (bool) {
-        if (tokenSelloutPrice[tokenId] > 0) {
+    ) public onlyRole(SELLOUT_SETTER_ROLE) returns (bool) {
+        if (tokenSelloutPrice[tokenId] > 0 || sold[tokenId]) {
             revert AlreadyDeclaredSold(); // "The item tied to this token has already been sold"
         }
+
+        tokenSelloutPrice[tokenId] = selloutPrice;
+        tokenDepositedCoin[tokenId] = depositedCoin;
+        return true;
+    }
+
+    /**
+     * @notice Deposits the sellout price of a token in the contract.
+     * @param tokenId The id of the token to deposit the sellout price of.
+     */
+    function deposit(uint256 tokenId) public payable {
+        if (tokenSelloutPrice[tokenId] == 0) {
+            revert SelloutPriceNotSet(); // "The sellout price of this token has not been set yet"
+        }
+        if (sold[tokenId]) {
+            revert AlreadyDeclaredSold(); // "The item tied to this token has already been sold"
+        }
+
+        uint256 selloutPrice = tokenSelloutPrice[tokenId];
+        address depositedCoin = tokenDepositedCoin[tokenId];
+
         if (!isApprovedCoin(depositedCoin)) {
             revert CoinNotApproved(); // "The deposited coin is not approved"
         }
@@ -141,19 +219,14 @@ contract FractifV1 is
                 selloutPrice
             );
         }
-        tokenSelloutPrice[tokenId] = selloutPrice;
-        tokenDepositedCoin[tokenId] = depositedCoin;
-        return true;
+        sold[tokenId] = true;
     }
 
-    function getDepositedCoin(uint256 tokenId) public view returns (address) {
-        return tokenDepositedCoin[tokenId];
-    }
-
-    function getInitialSupply(uint256 tokenId) public view returns (uint256) {
-        return tokenInitialSupply[tokenId];
-    }
-
+    /**
+     * @notice Get the refund amount of a token for a specific amount of to-be-burned tokens.
+     * @param tokenId The id of the token to get the refund amount of.
+     * @param burnAmount The amount of tokens the sender want to burn.
+     */
     function getRefundAmount(uint256 tokenId, uint256 burnAmount)
         public
         view
@@ -164,10 +237,12 @@ contract FractifV1 is
             uint(tokenInitialSupply[tokenId]); // dividing the burnAmount by the initialSupply would result in an error, so we're changing the order of the operations
     }
 
-    function setURI(string memory newuri) public onlyRole(URI_SETTER_ROLE) {
-        _setURI(newuri);
-    }
-
+    /**
+     * @notice Burns a specific amount of tokens and pays-back the sender, according to the sellout price.
+     * @param account The address of the account to burn tokens from.
+     * @param tokenId The id of the token to burn.
+     * @param amount The amount of tokens to burn.
+     */
     function burn(
         address account,
         uint256 tokenId,
@@ -182,6 +257,11 @@ contract FractifV1 is
         if (tokenSelloutPrice[tokenId] <= 0) {
             revert NotRedeemable(); // "The item tied to this token has not been sold yet"
         }
+
+        if (sold[tokenId] == false) {
+            revert NotRedeemable(); // "The item tied to this token has not been sold"
+        }
+
         _burn(account, tokenId, amount);
         // After burning the tokens, we send the corresponding amount of the deposited coin to the caller, avoiding a reentrancy attack.
         uint256 refundAmount = 0;
@@ -234,6 +314,14 @@ contract FractifV1 is
         _unpause();
     }
 
+    /**
+     * @notice Mint a specific amount of tokens to a specific address.
+     * @dev This function is only callable by the minter role, which is an approved operator able to list an item on the marketplace.
+     * @param account The address of the account to mint tokens to.
+     * @param id The id of the token to mint.
+     * @param amount The amount of tokens to mint.
+     * @param data The data to pass to the receiver.
+     */
     function mint(
         address account,
         uint256 id,
@@ -242,6 +330,7 @@ contract FractifV1 is
     ) public onlyRole(MINTER_ROLE) {
         tokenInitialSupply[id] = amount;
         tokenSelloutPrice[id] = 0;
+        sold[id] = false;
         _mint(account, id, amount, data);
     }
 
@@ -257,6 +346,7 @@ contract FractifV1 is
         for (uint i = 0; i < ids.length; i++) {
             tokenInitialSupply[ids[i]] = amounts[i];
             tokenSelloutPrice[ids[i]] = 0;
+            sold[ids[i]] = false;
         }
         _mintBatch(to, ids, amounts, data);
     }
@@ -268,7 +358,11 @@ contract FractifV1 is
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    ) internal override(ERC1155Upgradeable, ERC1155SupplyUpgradeable) whenNotPaused {
+    )
+        internal
+        override(ERC1155Upgradeable, ERC1155SupplyUpgradeable)
+        whenNotPaused
+    {
         // TODO: Implement fees
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
@@ -276,7 +370,7 @@ contract FractifV1 is
     /// @notice Allows to set the royalties on the contract
     /// @param recipient the royalties recipient
     /// @param value royalties value (between 0 and 10000)
-    function setRoyalties(address recipient, uint256 value) 
+    function setRoyalties(address recipient, uint256 value)
         public
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
