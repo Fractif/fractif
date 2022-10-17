@@ -88,36 +88,60 @@ describe("FractifV1", () => {
             .to.be.reverted
     })
 
-    it('can set the sell-out price with ethers', async function () {
-        const price = item1.sellout.ether
-        await fractifInstance.setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000", {from: owner.address, value: price})
+    const setTheSelloutPrice = async (price: string, address: string) => {
+        await fractifInstance.setSelloutPrice(item1.id, price, address, {from: owner.address})
         const selloutPrice = await fractifInstance.getSelloutPrice(item1.id)
-        const tokenBalance = await ethers.provider.getBalance(fractifInstance.address)
         expect(selloutPrice.toString(), `Sell-out price should be '${price}'`)
             .to.be.equal(price)
-        expect(tokenBalance, `Token balance should be '${price}'`)
-            .to.be.equal(price)
+    }
+
+    const depositFunds = async (price: string, erc20: boolean) => {
+        if (erc20) {
+            await fractifInstance.deposit(item1.id)
+            const tokenBalance = await fakeToken.balanceOf(fractifInstance.address)
+            expect(tokenBalance.toString(), `Token balance should be '${price}'`)
+                .to.equal(price)
+        } else {
+            await fractifInstance.deposit(item1.id, {value: price})
+            const tokenBalance = await ethers.provider.getBalance(fractifInstance.address)
+            expect(tokenBalance, `Token balance should be '${price}'`)
+                .to.be.equal(price)
+        }
+    }
+
+    it('can set the sell-out price with ethers', async function () {
+        const price = item1.sellout.ether
+        await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+    })
+
+    it('can deposit ethers once the sell-out price has been set', async () => {
+        const price = item1.sellout.ether
+        await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+        await depositFunds(price, false)
     })
 
     it('can set the sell-out price with an ERC20 token - FakeERC20', async function () {
         const price = item1.sellout.fakeErc20 // 1000 FakeERC20 tokens
         await canAddApprovedCoin()
         await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
-        await fractifInstance.setSelloutPrice(item1.id, price, fakeToken.address, {from: owner.address})
-        const selloutPrice = await fractifInstance.getSelloutPrice(item1.id)
+        await setTheSelloutPrice(price, fakeToken.address)
         const depositedCoin = await fractifInstance.getDepositedCoin(item1.id)
-        const tokenBalance = await fakeToken.balanceOf(fractifInstance.address)
         expect(depositedCoin, `Deposited coin should be '${fakeToken.address}'`)
             .to.equal(fakeToken.address)
-        expect(selloutPrice.toString(), `Sell-out price should be '${price}'`)
-            .to.equal(price)
-        expect(tokenBalance.toString(), `Token balance should be '${price}'`)
-            .to.equal(price)
+        
+    })
+
+    it('can deposit ERC20 tokens once the sell-out price has been set', async () => {
+        const price = item1.sellout.fakeErc20 // 1000 FakeERC20 tokens
+        await canAddApprovedCoin()
+        await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
+        await setTheSelloutPrice(price, fakeToken.address)
+        await depositFunds(price, true)
     })
 
     it('should fail to set the sell-out price if not allowed', async function () {
         const price = item1.sellout.ether
-        expect(fractifInstance.connect(buyer1).setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000", {value: price}))
+        expect(fractifInstance.connect(buyer1).setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000"))
             .to.be.reverted
     })
 
@@ -140,7 +164,7 @@ describe("FractifV1", () => {
         const balance = await sendTokensFromOwnerToAccount3()
         const price = item1.sellout.ether
         const amountToBeRedeemed = ethers.utils.parseEther("0.1")
-        await fractifInstance.setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000", {value: price})
+        await fractifInstance.setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000")
         const ownedAmount = await fractifInstance.getRefundAmount(item1.id, balance)
         expect(ownedAmount.toString(), `Owned amount should be '${amountToBeRedeemed}'`)
             .to.be.equal(amountToBeRedeemed)
@@ -154,7 +178,8 @@ describe("FractifV1", () => {
         const amount = BigNumber.from(ethers.utils.parseEther("1"))
         const amountToBeRedeemed = BigNumber.from(ethers.utils.parseEther("0.1"))
         const price = item1.sellout.ether
-        await fractifInstance.setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000", {from: owner.address, value: price})
+        await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+        await depositFunds(price, false)
         // Burn
         const tx = await fractifInstance.connect(buyer3).burn(buyer3.address, item1.id, toBnPowed(100))
         // const tx = await ethers.provider.getTransaction(receipt.tx)
@@ -201,7 +226,8 @@ describe("FractifV1", () => {
         expect(balance.toString(), "Account 2 should have 1000 tokens")
             .to.be.equal(holderSharesBn.toString())
         const callerBalanceBeforeBurn = await fakeToken.balanceOf(buyer2.address) // 1000 FakeERC20 tokens
-        await fractifInstance.setSelloutPrice(item1.id, amountInjected, fakeToken.address, {from: owner.address})
+        await setTheSelloutPrice(amountInjected.toString(), fakeToken.address)
+        await depositFunds(amountInjected.toString(), true)
 
         const ownedAmount = await fractifInstance.getRefundAmount(item1.id, balance)
 
