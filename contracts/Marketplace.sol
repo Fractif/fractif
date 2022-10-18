@@ -190,7 +190,6 @@ contract Marketplace is
         return address(this).balance;
     }
 
-
     /**
      * @notice Buy a listing
      */
@@ -214,7 +213,7 @@ contract Marketplace is
         // Calculate & Transfer platfrom fee
         uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
         // Transfer platform fee to the fee recipient
-        address(address(this)).call{value: msg.value}("");
+        address(address(this)).call{value: platformFeeTotal}("");
 
         // Then we need to transfer the money to the seller
         address(msg.sender).call{value: msg.value}("");
