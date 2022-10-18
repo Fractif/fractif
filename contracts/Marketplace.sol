@@ -211,9 +211,11 @@ contract Marketplace is
         );
 
         // Calculate & Transfer platfrom fee
-        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
+        uint256 platformFee = calculatePlatformFee(listings[_listingId].amount);
         // Transfer platform fee to the fee recipient
-        address(address(this)).call{value: platformFeeTotal}("");
+
+        (bool success, ) = address(address(this)).call{value: platformFee}("");
+        require(success, "transaction failed");
 
         // Then we need to transfer the money to the seller
         address(msg.sender).call{value: msg.value}("");
