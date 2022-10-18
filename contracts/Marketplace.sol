@@ -16,6 +16,7 @@ contract Marketplace is
     PausableUpgradeable
 {
     using Counters for Counters.Counter;
+    uint256 public constant platformFee = 10;
 
     enum ListingStatus {
         ACTIVE,
@@ -103,8 +104,15 @@ contract Marketplace is
         __Pausable_init();
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-
         fractifApp = _fractifApp;
+    }
+
+    function calculatePlatformFee(uint256 _price)
+        public
+        pure
+        returns (uint256)
+    {
+        return (_price * platformFee) / 10000;
     }
 
     /**
@@ -197,6 +205,11 @@ contract Marketplace is
             listings[_listingId].amount, 
             ""
         );
+
+        // Calculate & Transfer platfrom fee
+        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
+        // Transfer platform fee to the fee recipient
+        address(address(this)).call{value: msg.value}("");
 
         // Then we need to transfer the money to the seller
         address(msg.sender).call{value: msg.value}("");
