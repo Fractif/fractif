@@ -186,6 +186,11 @@ contract Marketplace is
         listings[_listingId].state = ListingStatus.ACTIVE;
     }
 
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+
     /**
      * @notice Buy a listing
      */
