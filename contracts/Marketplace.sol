@@ -16,7 +16,7 @@ contract Marketplace is
     PausableUpgradeable
 {
     using Counters for Counters.Counter;
-    uint256 public constant platformFee = 10;
+    uint256 public constant platformFeePercent = 20;
 
     enum ListingStatus {
         ACTIVE,
@@ -112,7 +112,7 @@ contract Marketplace is
         pure
         returns (uint256)
     {
-        return (_price * platformFee) / 10000;
+        return (_price * platformFeePercent) / 100;
     }
 
     /**
@@ -211,14 +211,10 @@ contract Marketplace is
         );
 
         // Calculate & Transfer platfrom fee
-        uint256 platformFee = calculatePlatformFee(listings[_listingId].amount);
-        // Transfer platform fee to the fee recipient
-
-        (bool successFee, ) = payable(address(this)).call{value: platformFee}("");
-        require(successFee, "Fee transaction failed");
+        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
 
         // Then we need to transfer the money to the seller
-        (bool successTransfer, ) = address(msg.sender).call{value: msg.value}("");
+        (bool successTransfer, ) = address(listings[_listingId].seller).call{value:  msg.value - platformFeeTotal}("");
         require(successTransfer, "Transfer transaction failed");
 
 

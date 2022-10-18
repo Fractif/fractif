@@ -106,6 +106,28 @@ describe('Marketplace', () => {
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 		});
 
+		it('smartContract should keep fees', async () => {
+			//send eth to marketplace
+			buyer2.sendTransaction({
+				to: marketplaceInstance.address,
+				value: ethers.utils.parseEther("1.0"),
+			});
+
+			await listItem();
+			let listing = await marketplaceInstance.listings(0);
+			const price = listing.price.mul(listing.amount);
+			const platformFee = listing.amount.toNumber() * 20 / 100;
+			await marketplaceInstance
+				.connect(buyer2)
+				.buyListing(0, { value: price });
+			expect(
+				await fractifInstance.balanceOf(buyer2.address, item.id)
+			).to.equal(3000 + 10);
+			listing = await marketplaceInstance.listings(0);
+			expect(listing.state).to.equal(MarketplaceListingState.Sold);
+			expect(await marketplaceInstance.getBalance()).to.equal(platformFee);
+		});
+
 		it('should be able to reactivate a listing', async () => {
 			await listItem();
 			await deactivateListing();
