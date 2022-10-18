@@ -255,7 +255,7 @@ contract FractifV1 is
         }
 
         if (tokenSelloutPrice[tokenId] <= 0) {
-            revert NotRedeemable(); // "The item tied to this token has not been sold yet"
+            revert NotRedeemable(); // "The sellout price has not been defined yet"
         }
 
         if (sold[tokenId] == false) {
