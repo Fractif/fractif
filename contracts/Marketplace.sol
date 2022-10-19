@@ -91,6 +91,10 @@ contract Marketplace is
      * @notice Error triggered when the amount sent is insufficient
      */
     error InsufficientAmount();
+    /**
+     * @notice Error triggered when a Transfer fails
+     */
+    error TransferFailed();
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -216,7 +220,7 @@ contract Marketplace is
         
         // Then we need to transfer the money to the seller
         (bool successTransfer, ) = address(listings[_listingId].seller).call{value: msg.value - platformFeeTotal}("");
-        require(successTransfer, "Transfer transaction failed");
+        if(!successTransfer){ revert TransferFailed();}
 
         // Then set the listing as sold
         listings[_listingId].state = ListingStatus.SOLD;

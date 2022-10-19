@@ -15,6 +15,9 @@ describe('Marketplace', () => {
 		buyer2: SignerWithAddress,
 		buyer3: SignerWithAddress,
 		buyer4: SignerWithAddress;
+	let seller1InitialItemBalance: number,
+		buyer2InitialItemBalance: number,
+		buyer3InitialItemBalance: number;
 
 	beforeEach(async () => {
 		[owner, seller, buyer2, buyer3, buyer4] = await ethers.getSigners();
@@ -29,25 +32,29 @@ describe('Marketplace', () => {
 		// Mint 10000 tokens as the owner, the only one who can mint at this stage
 		await fractifInstance.mint(owner.address, 0, 10000, '0x00');
 		// Distribute tokens to different buyers
+		seller1InitialItemBalance = 2000;
+		buyer2InitialItemBalance = 3000;
+		buyer3InitialItemBalance = 2000;
+
 		await fractifInstance.safeTransferFrom(
 			owner.address,
 			seller.address,
 			item.id,
-			2000,
+			seller1InitialItemBalance,
 			'0x00'
 		);
 		await fractifInstance.safeTransferFrom(
 			owner.address,
 			buyer2.address,
 			item.id,
-			3000,
+			buyer2InitialItemBalance,
 			'0x00'
 		);
 		await fractifInstance.safeTransferFrom(
 			owner.address,
 			buyer3.address,
 			item.id,
-			5000,
+			buyer3InitialItemBalance,
 			'0x00'
 		);
 	});
@@ -69,7 +76,7 @@ describe('Marketplace', () => {
 			expect(listing.state).to.equal(MarketplaceListingState.Active);
 			expect(
 				await fractifInstance.balanceOf(seller.address, item.id)
-			).to.equal(2000 - 10);
+			).to.equal(seller1InitialItemBalance - 10);
 		};
 
 		const deactivateListing = async () => {
@@ -100,9 +107,8 @@ describe('Marketplace', () => {
 			await marketplaceInstance
 				.connect(buyer2)
 				.buyListing(0, { value: price });
-			expect(
-				await fractifInstance.balanceOf(buyer2.address, item.id)
-			).to.equal(3000 + 10);
+				expect(await fractifInstance.balanceOf(buyer2.address, item.id))
+				.to.equal(buyer2InitialItemBalance + 10);
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 		});
@@ -115,9 +121,8 @@ describe('Marketplace', () => {
 			await marketplaceInstance
 				.connect(buyer2)
 				.buyListing(0, { value: price });
-			expect(
-				await fractifInstance.balanceOf(buyer2.address, item.id)
-			).to.equal(3000 + 10);
+				expect(await fractifInstance.balanceOf(buyer2.address, item.id))
+				.to.equal(buyer2InitialItemBalance + 10);
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 			expect(await ethers.provider.getBalance(marketplaceInstance.address)).to.equal(platformFee);
@@ -131,9 +136,8 @@ describe('Marketplace', () => {
 			await marketplaceInstance
 				.connect(buyer2)
 				.buyListing(0, { value: price });
-			expect(
-				await fractifInstance.balanceOf(buyer2.address, item.id)
-			).to.equal(3000 + 10);
+				expect(await fractifInstance.balanceOf(buyer2.address, item.id))
+				.to.equal(buyer2InitialItemBalance + 10);
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 			
