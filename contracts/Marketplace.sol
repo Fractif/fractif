@@ -215,7 +215,7 @@ contract Marketplace is
         uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
         
         // Then we need to transfer the money to the seller
-        (bool successTransfer, ) = payable(address(listings[_listingId].seller)).call{value: msg.value - platformFeeTotal}("");
+        (bool successTransfer, ) = address(listings[_listingId].seller).call{value: msg.value - platformFeeTotal}("");
         require(successTransfer, "Transfer transaction failed");
 
         // Then set the listing as sold

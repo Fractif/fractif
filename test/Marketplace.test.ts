@@ -120,7 +120,7 @@ describe('Marketplace', () => {
 			).to.equal(3000 + 10);
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
-			expect(await marketplaceInstance.getBalance()).to.equal(platformFee);
+			expect(await ethers.provider.getBalance(marketplaceInstance.address)).to.equal(platformFee);
 		});
 
 		it('seller should receive funds minus fees', async () => {
@@ -139,7 +139,6 @@ describe('Marketplace', () => {
 			
 			//Calculate fee took by the smartcontract
 			const platformFee = price.mul(20).div(100);
-
 			expect(await seller.getBalance()).to.equal(balanceSellerPostListing.add(price.sub(platformFee)));
 		});
 
