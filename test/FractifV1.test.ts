@@ -4,8 +4,8 @@ import { BigNumber } from "ethers"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 
 import { expect } from "chai"
-import { FakeERC20, FractifV1 } from "../types/contracts/"
-import { toBnPowed, allowFractifToSpendFakeToken, genItemForSale } from "./utils"
+import { FakeERC20, FractifV1, IERC1155Upgradeable__factory, IERC165__factory } from "../types/contracts/"
+import { toBnPowed, allowFractifToSpendFakeToken, genItemForSale, getInterfaceID } from "./utils"
 
 type Item = {
     id: number,
@@ -307,5 +307,15 @@ describe("FractifV1", () => {
         let supply = await fractifInstance.totalSupply(item1.id)
         expect(supply.toString(), "Total supply should be 900 tokens")
             .to.be.equal(toBnPowed(item1.quantity - holderShares).toString())
+    })
+
+    it('can set the royalty', async () => {
+        await fractifInstance.setRoyalties(owner.address, 100)
+    })
+
+    it('supports the ERC2981 interface', async () => {
+        const erc2981InterfaceId = "0x2a55205a"
+        const supportsInterface = await fractifInstance.supportsInterface(erc2981InterfaceId)
+        expect(supportsInterface, "Doesn't support the ERC2981 interface").to.be.true
     })
 })
