@@ -18,15 +18,18 @@ describe('Marketplace', () => {
 	let seller1InitialItemBalance: number,
 		buyer2InitialItemBalance: number,
 		buyer3InitialItemBalance: number;
+	let platformFeePercent: number;
 
 	beforeEach(async () => {
 		[owner, seller, buyer2, buyer3, buyer4] = await ethers.getSigners();
+		platformFeePercent = 20;
 		const FractifV1 = await ethers.getContractFactory('FractifV1');
 		fractifInstance = (await upgrades.deployProxy(FractifV1)) as FractifV1;
 		const address = '0x0000';
 		const Marketplace = await ethers.getContractFactory('Marketplace');
 		marketplaceInstance = (await upgrades.deployProxy(Marketplace, [
 			fractifInstance.address,
+			platformFeePercent
 		])) as Marketplace;
 		item = genItemForSale(0);
 		// Mint 10000 tokens as the owner, the only one who can mint at this stage

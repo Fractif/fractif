@@ -16,7 +16,6 @@ contract Marketplace is
     PausableUpgradeable
 {
     using Counters for Counters.Counter;
-    uint256 public constant platformFeePercent = 20;
 
     enum ListingStatus {
         ACTIVE,
@@ -63,6 +62,10 @@ contract Marketplace is
      */
     address private fractifApp;
     /**
+     * @notice Platform fees take by the contract for any listing buy
+     */
+    uint256 private platformFeePercent;
+    /**
      * @notice The listings
      */
     mapping(uint256 => Listing) public listings;
@@ -101,14 +104,14 @@ contract Marketplace is
         _disableInitializers();
     }
 
-    function initialize(address _fractifApp) initializer public {
+    function initialize(address _fractifApp, uint256 _platformFeePercent) initializer public {
         __ERC1155Holder_init();
         __ERC1155Receiver_init();
         __AccessControl_init();
         __Pausable_init();
-
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         fractifApp = _fractifApp;
+        platformFeePercent = _platformFeePercent;
     }
 
     /**
@@ -117,7 +120,7 @@ contract Marketplace is
      */
     function calculatePlatformFee(uint256 _price)
         public
-        pure
+        view
         returns (uint256)
     {
         return ((_price * platformFeePercent) / 100) * 10**18;
