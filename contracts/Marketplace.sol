@@ -104,18 +104,19 @@ contract Marketplace is
         _disableInitializers();
     }
 
-    function initialize(address _fractifApp, uint256 _platformFeePercent) initializer public {
+    function initialize(address _fractifApp) initializer public {
         __ERC1155Holder_init();
         __ERC1155Receiver_init();
         __AccessControl_init();
         __Pausable_init();
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         fractifApp = _fractifApp;
-        platformFeePercent = _platformFeePercent;
+        platformFeePercent = 2000; // 20% of the price
     }
 
     /**
      * @notice Calculates the fees that the contract takes
+     * @dev We use 5 decimals for the fees, so 2000 = 20%, 10000 = 100%
      * @param _price The total price of the tx
      */
     function calculatePlatformFee(uint256 _price)
@@ -123,7 +124,7 @@ contract Marketplace is
         view
         returns (uint256)
     {
-        return ((_price * platformFeePercent) / 100) * 10**18;
+        return ((_price * platformFeePercent) / 10000) * 10**18;
     }
 
     /**
