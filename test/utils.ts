@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers"
+import { BigNumber, utils } from "ethers"
 import { ethers } from "hardhat";
 import { FakeERC20, FractifV1 } from "../types/contracts";
 import { expect } from "chai"
@@ -51,3 +51,12 @@ export const genItemForSale = (id: number, quantity?: number): Item => {
     expect(allowance, `FractifV1 should be allowed to spend '${amount}' 'fake-tokens' of account 0`)
         .to.equal(amount);
 }
+
+export const getInterfaceID = (contractInterface: utils.Interface) => {
+    let interfaceID = ethers.constants.Zero;
+    const functions: string[] = Object.keys(contractInterface.functions);
+    for (let i = 0; i < functions.length; i++) {
+        interfaceID = interfaceID.xor(contractInterface.getSighash(functions[i]));
+    }
+    return interfaceID;
+}  

@@ -6,7 +6,8 @@
     "start": "next start",
     "type-check": "tsc",
     "typechain": "npx hardhat typechain",
-    "compile": "npx hardhat compile"
+    "compile": "npx hardhat compile",
+    "coverage": "npx hardhat coverage"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
