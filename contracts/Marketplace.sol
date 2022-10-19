@@ -107,6 +107,10 @@ contract Marketplace is
         fractifApp = _fractifApp;
     }
 
+    /**
+     * @notice Calculates the fees that the contract takes
+     * @param _price The total price of the tx
+     */
     function calculatePlatformFee(uint256 _price)
         public
         pure
@@ -186,9 +190,6 @@ contract Marketplace is
         listings[_listingId].state = ListingStatus.ACTIVE;
     }
 
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
 
     /**
      * @notice Buy a listing

@@ -107,7 +107,7 @@ describe('Marketplace', () => {
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 		});
 
-		it('smartContract should keep fees', async () => {
+		it('should keep fees', async () => {
 			await listItem();
 			let listing = await marketplaceInstance.listings(0);
 			const price = listing.price.mul(listing.amount);
