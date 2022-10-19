@@ -11,13 +11,13 @@ describe('Marketplace', () => {
 	let fractifInstance: FractifV1;
 	let item: Item;
 	let owner: SignerWithAddress,
-		buyer1: SignerWithAddress,
+		seller: SignerWithAddress,
 		buyer2: SignerWithAddress,
 		buyer3: SignerWithAddress,
 		buyer4: SignerWithAddress;
 
 	beforeEach(async () => {
-		[owner, buyer1, buyer2, buyer3, buyer4] = await ethers.getSigners();
+		[owner, seller, buyer2, buyer3, buyer4] = await ethers.getSigners();
 		const FractifV1 = await ethers.getContractFactory('FractifV1');
 		fractifInstance = (await upgrades.deployProxy(FractifV1)) as FractifV1;
 		const address = '0x0000';
@@ -31,7 +31,7 @@ describe('Marketplace', () => {
 		// Distribute tokens to different buyers
 		await fractifInstance.safeTransferFrom(
 			owner.address,
-			buyer1.address,
+			seller.address,
 			item.id,
 			2000,
 			'0x00'
@@ -55,30 +55,31 @@ describe('Marketplace', () => {
 	describe('Marketplace listing', () => {
 		const listItem = async () => {
 			await fractifInstance
-				.connect(buyer1)
+				.connect(seller)
 				.setApprovalForAll(marketplaceInstance.address, true);
+			//Create listing of 10 tokens with a price of 1 ETH per token
 			await marketplaceInstance
-				.connect(buyer1)
-				.createListing(item.id, BigNumber.from(1), 10);
+				.connect(seller)
+				.createListing(item.id, BigNumber.from(toBnPowed(1)), 10);
 			const listing = await marketplaceInstance.listings(0);
-			expect(listing.seller).to.equal(buyer1.address);
+			expect(listing.seller).to.equal(seller.address);
 			expect(listing.tokenId).to.equal(item.id);
-			expect(listing.price).to.equal(BigNumber.from(1));
+			expect(listing.price).to.equal(BigNumber.from(toBnPowed(1)));
 			expect(listing.amount).to.equal(10);
 			expect(listing.state).to.equal(MarketplaceListingState.Active);
 			expect(
-				await fractifInstance.balanceOf(buyer1.address, item.id)
+				await fractifInstance.balanceOf(seller.address, item.id)
 			).to.equal(2000 - 10);
 		};
 
 		const deactivateListing = async () => {
-			await marketplaceInstance.connect(buyer1).deactivateListing(0);
+			await marketplaceInstance.connect(seller).deactivateListing(0);
 			const listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Deactivated);
 		};
 
 		const reactivateListing = async () => {
-			await marketplaceInstance.connect(buyer1).reactivateListing(0);
+			await marketplaceInstance.connect(seller).reactivateListing(0);
 			const listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Active);
 		};
@@ -107,16 +108,10 @@ describe('Marketplace', () => {
 		});
 
 		it('smartContract should keep fees', async () => {
-			//send eth to marketplace
-			buyer2.sendTransaction({
-				to: marketplaceInstance.address,
-				value: ethers.utils.parseEther("1.0"),
-			});
-
 			await listItem();
 			let listing = await marketplaceInstance.listings(0);
 			const price = listing.price.mul(listing.amount);
-			const platformFee = listing.amount.toNumber() * 20 / 100;
+			const platformFee = price.mul(20).div(100);
 			await marketplaceInstance
 				.connect(buyer2)
 				.buyListing(0, { value: price });
@@ -126,6 +121,26 @@ describe('Marketplace', () => {
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 			expect(await marketplaceInstance.getBalance()).to.equal(platformFee);
+		});
+
+		it('seller should receive funds minus fees', async () => {
+			await listItem();
+			let balanceSellerPostListing = await seller.getBalance();
+			let listing = await marketplaceInstance.listings(0);
+			const price = listing.price.mul(listing.amount);
+			await marketplaceInstance
+				.connect(buyer2)
+				.buyListing(0, { value: price });
+			expect(
+				await fractifInstance.balanceOf(buyer2.address, item.id)
+			).to.equal(3000 + 10);
+			listing = await marketplaceInstance.listings(0);
+			expect(listing.state).to.equal(MarketplaceListingState.Sold);
+			
+			//Calculate fee took by the smartcontract
+			const platformFee = price.mul(20).div(100);
+
+			expect(await seller.getBalance()).to.equal(balanceSellerPostListing.add(price.sub(platformFee)));
 		});
 
 		it('should be able to reactivate a listing', async () => {
