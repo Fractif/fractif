@@ -62,6 +62,10 @@ contract Marketplace is
      */
     address private fractifApp;
     /**
+     * @notice Platform fees take by the contract for any listing buy
+     */
+    uint256 private platformFeePercent;
+    /**
      * @notice The listings
      */
     mapping(uint256 => Listing) public listings;
@@ -90,6 +94,10 @@ contract Marketplace is
      * @notice Error triggered when the amount sent is insufficient
      */
     error InsufficientAmount();
+    /**
+     * @notice Error triggered when a Transfer fails
+     */
+    error TransferFailed();
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -101,10 +109,22 @@ contract Marketplace is
         __ERC1155Receiver_init();
         __AccessControl_init();
         __Pausable_init();
-
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-
         fractifApp = _fractifApp;
+        platformFeePercent = 2000; // 20% of the price
+    }
+
+    /**
+     * @notice Calculates the fees that the contract takes
+     * @dev We use 5 decimals for the fees, so 2000 = 20%, 10000 = 100%
+     * @param _price The total price of the tx
+     */
+    function calculatePlatformFee(uint256 _price)
+        public
+        view
+        returns (uint256)
+    {
+        return ((_price * platformFeePercent) / 10000) * 10**18;
     }
 
     /**
@@ -166,6 +186,19 @@ contract Marketplace is
         // TODO: Emit listing deactivated event
     }
 
+    function reactivateListing(uint256 _listingId) public {
+        if (listings[_listingId].seller != msg.sender) {
+            revert Unauthorized();
+        }
+
+        // Re-transfer the tokens to the marketplace
+        IERC1155(fractifApp).safeTransferFrom(msg.sender, address(this), listings[_listingId].tokenId, listings[_listingId].amount, "");
+
+
+        listings[_listingId].state = ListingStatus.ACTIVE;
+    }
+
+
     /**
      * @notice Buy a listing
      */
@@ -186,8 +219,12 @@ contract Marketplace is
             ""
         );
 
+        // Calculate & Transfer platfrom fee
+        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
+        
         // Then we need to transfer the money to the seller
-        address(msg.sender).call{value: msg.value}("");
+        (bool successTransfer, ) = address(listings[_listingId].seller).call{value: msg.value - platformFeeTotal}("");
+        if(!successTransfer){ revert TransferFailed();}
 
         // Then set the listing as sold
         listings[_listingId].state = ListingStatus.SOLD;
