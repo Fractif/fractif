@@ -8,6 +8,11 @@
 ```sh
 npm i
 ```
+Fill out .env file:
+.env.example
+```sh
+REACT_APP_INFURA_KEY=YOUR INFURA KEY
+```
 ### Testing
 - Run in shell
 ```sh
