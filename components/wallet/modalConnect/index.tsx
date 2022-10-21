@@ -29,11 +29,11 @@ export default function SelectWalletModal() {
                     <WalletWarningTab />
                 </Stack>
             </Modal>
-            <Button size="md" onClick={() =>  active ? undefined : setOpened(true)}>
+            <Button size="md" onClick={() => active ? undefined : setOpened(true)}>
                 {active ?
-                <Text>
-                    {account ? account.slice(0, 6) + "..." + account.slice(account.length - 4, account.length) : "Connect"}
-                </Text>
+                    <Text>
+                        {account ? account.slice(0, 6) + "..." + account.slice(account.length - 4, account.length) : "Connect"}
+                    </Text>
                     :
                     "Connect Wallet"
                 }
