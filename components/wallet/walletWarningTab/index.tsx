@@ -1,22 +1,26 @@
 import { Box } from '@mantine/core';
-import { TERM_AND_SERVICES_URL, DISCLAIMER_URL } from '../../../constants';
+import { TERM_AND_SERVICES_URL, DISCLAIMER_URL } from '@constants/index';
 
 export default function WalletWarningTab() {
     return (
         <>
             <Box
                 sx={(theme) => ({
+
                     //Positioning
                     textAlign: 'center',
                     padding: theme.spacing.lg,
+
                     //Color
                     backgroundColor: theme.colors.gray[0],
                     color: theme.colors.gray[8],
+
                     //Border
                     borderRadius: theme.radius.md,
                     border: 'solid',
                     borderBlockWidth: 1,
                     borderColor: theme.colors.gray[3],
+
                     //Font
                     fontWeight: 450,
                     fontSize: 12,
