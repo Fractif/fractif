@@ -56,6 +56,10 @@ contract FractifV1 is
      */
     mapping(uint256 => address) public tokenDepositedCoin;
     /**
+     * @notice When was the last time the sellout price was updated for a sale
+     */
+    mapping(uint256 => uint256) public tokenPreviousSaleTimestamp;
+    /**
      * @notice Item tied to the token has been sold.
      */
     mapping(uint256 => bool) public sold;
@@ -64,6 +68,11 @@ contract FractifV1 is
      * @dev Initialized with ether under the address 0x00.
      */
     mapping(address => bool) approvedCoins;
+    /**
+     * @notice Delay before the sellout price can be updated again. 
+     * This period is used to prevent price manipulation while the item tied to the token is still on sale.
+     */
+    uint256 public selloutPriceUpdateDelay;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -82,6 +91,7 @@ contract FractifV1 is
         _grantRole(SELLOUT_SETTER_ROLE, msg.sender);
 
         approvedCoins[address(0x00)] = true;
+        selloutPriceUpdateDelay = 7 days;
     }
 
     /**
@@ -112,6 +122,10 @@ contract FractifV1 is
      * @notice The sellout price is not set.
      */
     error SelloutPriceNotSet();
+    /**
+     * @notice The sellout price can't be updated yet.
+     */
+    error SelloutPriceUpdateDelayNotReached(uint256 untilTimestamp);
 
     /**
      * @notice Checks if a coin is whitelisted.
@@ -169,8 +183,8 @@ contract FractifV1 is
     }
 
     /**
-     * @notice Sets the sellout price of a token.
-     * @dev This function can only be called by the `SELLOUT_SETTER_ROLE` which is mostlikely a governor instance.
+     * @notice Sets the sellout price of a token. Note that this function has a delay (`selloutPriceUpdateDelay`) to prevent price manipulation.
+     * @dev This function can only be called by the `SELLOUT_SETTER_ROLE` which is most likely a governor instance.
      * @param tokenId The id of the token to set the sellout price of.
      * @param selloutPrice The price at which the item tied to the token should be sold.
      * @param depositedCoin The address of the ERC20 coin that is used to pay-back tokens holders.
@@ -180,13 +194,28 @@ contract FractifV1 is
         uint256 selloutPrice,
         address depositedCoin
     ) public onlyRole(SELLOUT_SETTER_ROLE) returns (bool) {
-        if (tokenSelloutPrice[tokenId] > 0 || sold[tokenId]) {
+        if (sold[tokenId]) {
             revert AlreadyDeclaredSold(); // "The item tied to this token has already been sold"
         }
-
-        tokenSelloutPrice[tokenId] = selloutPrice;
-        tokenDepositedCoin[tokenId] = depositedCoin;
-        return true;
+        // Sellout price is undefined
+        if (tokenSelloutPrice[tokenId] == 0) {
+            tokenSelloutPrice[tokenId] = selloutPrice;
+            tokenDepositedCoin[tokenId] = depositedCoin;
+            tokenPreviousSaleTimestamp[tokenId] = block.timestamp;
+            return true;
+        } else if (
+            // Current timestamp is greater than the previous sale timestamp + the delay
+            block.timestamp > tokenPreviousSaleTimestamp[tokenId] + selloutPriceUpdateDelay
+        ) {
+            tokenSelloutPrice[tokenId] = selloutPrice; // most likely changing to 0 to reset the sellout price
+            tokenDepositedCoin[tokenId] = depositedCoin;
+            tokenPreviousSaleTimestamp[tokenId] = block.timestamp;
+            return true;
+        } else {
+            revert SelloutPriceUpdateDelayNotReached(
+                tokenPreviousSaleTimestamp[tokenId] + selloutPriceUpdateDelay
+            ); // "The sellout price can't be updated yet"
+        }
     }
 
     /**
@@ -330,6 +359,7 @@ contract FractifV1 is
     ) public onlyRole(MINTER_ROLE) {
         tokenInitialSupply[id] = amount;
         tokenSelloutPrice[id] = 0;
+        tokenPreviousSaleTimestamp[id] = 0;
         sold[id] = false;
         _mint(account, id, amount, data);
     }
@@ -346,6 +376,7 @@ contract FractifV1 is
         for (uint i = 0; i < ids.length; i++) {
             tokenInitialSupply[ids[i]] = amounts[i];
             tokenSelloutPrice[ids[i]] = 0;
+            tokenPreviousSaleTimestamp[ids[i]] = 0;
             sold[ids[i]] = false;
         }
         _mintBatch(to, ids, amounts, data);

@@ -1,4 +1,4 @@
-import { upgrades, ethers } from "hardhat"
+import { upgrades, ethers, network } from "hardhat"
 
 import { BigNumber } from "ethers"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
@@ -6,6 +6,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { expect } from "chai"
 import { FakeERC20, FractifV1, IERC1155Upgradeable__factory, IERC165__factory } from "../types/contracts/"
 import { toBnPowed, allowFractifToSpendFakeToken, genItemForSale, getInterfaceID } from "./utils"
+import { assert } from "console"
 
 type Item = {
     id: number,
@@ -40,6 +41,11 @@ describe("FractifV1", () => {
         await fractifInstance.connect(buyer2).setApprovalForAll(owner.address, true)
         fakeToken = await FakeErc20.connect(owner).deploy()
         await fakeToken.transfer(buyer2.address, toBnPowed(1000))
+    })
+
+    afterEach(async () => {
+        // Reset the blockchain
+        await network.provider.send("hardhat_reset")
     })
 
     it(`has a total supply of ${item1.quantity} for token ${item1.id}`, async () => {
@@ -168,26 +174,60 @@ describe("FractifV1", () => {
         }
     }
 
-    it('can set the sell-out price with ethers', async () => {
-        const price = item1.sellout.ether
-        await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
-    })
+    describe('FractifV1 - Sellout', () => {
+        it('can set the sell-out price with ethers', async () => {
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+        })
+    
+        it('can deposit ethers once the sell-out price has been set', async () => {
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await depositFunds(price, false)
+        })
+    
+        it('can set the sell-out price with an ERC20 token - FakeERC20', async () => {
+            const price = item1.sellout.fakeErc20 // 1000 FakeERC20 tokens
+            await canAddApprovedCoin()
+            await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
+            await setTheSelloutPrice(price, fakeToken.address)
+            const timestamp = Math.round(Date.now() / 1000);
+            const depositedCoin = await fractifInstance.getDepositedCoin(item1.id)
+            expect(depositedCoin, `Deposited coin should be '${fakeToken.address}'`)
+                .to.equal(fakeToken.address)
+            const previousSaleTimestamp = await fractifInstance.tokenPreviousSaleTimestamp(item1.id)
+            expect(previousSaleTimestamp)
+                .to.be.closeTo(timestamp, 60, "Previous sale timestamp should be +/- 60 seconds to now")
+        })
+    
+        it('should fail to set the sell-out price if not allowed', async () => {
+            const price = item1.sellout.ether
+            expect(fractifInstance.connect(buyer1).setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000"))
+                .to.be.reverted
+        })
+    
+        it('should fail to set the sellout price if the sellout price has been set less than 7 days ago', async () => {
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await network.provider.send("evm_increaseTime", [10])
+            expect(fractifInstance.setSelloutPrice(item1.id, toBnPowed(1000), "0x0000000000000000000000000000000000000000"))
+                .to.be.revertedWithCustomError(fractifInstance, "SelloutPriceUpdateDelayNotReached")
+        })
 
-    it('can deposit ethers once the sell-out price has been set', async () => {
-        const price = item1.sellout.ether
-        await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
-        await depositFunds(price, false)
-    })
+        it('should fail to set the sellout price if the item has already been sold', async () => {
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await depositFunds(price, false)
+            expect(fractifInstance.setSelloutPrice(item1.id, toBnPowed(1000), "0x0000000000000000000000000000000000000000"))
+                .to.be.revertedWithCustomError(fractifInstance, "AlreadyDeclaredSold")
+        })
 
-    it('can set the sell-out price with an ERC20 token - FakeERC20', async () => {
-        const price = item1.sellout.fakeErc20 // 1000 FakeERC20 tokens
-        await canAddApprovedCoin()
-        await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
-        await setTheSelloutPrice(price, fakeToken.address)
-        const depositedCoin = await fractifInstance.getDepositedCoin(item1.id)
-        expect(depositedCoin, `Deposited coin should be '${fakeToken.address}'`)
-            .to.equal(fakeToken.address)
-        
+        it('should be able to reset the sellout price if it has been defined at least 7 days ago', async () => {
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await network.provider.send("evm_increaseTime", [7 * 24 * 60 * 60 + 10])
+            await setTheSelloutPrice("0", "0x0000000000000000000000000000000000000000")
+        })
     })
 
     it('can deposit ERC20 tokens once the sell-out price has been set', async () => {
@@ -196,12 +236,6 @@ describe("FractifV1", () => {
         await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
         await setTheSelloutPrice(price, fakeToken.address)
         await depositFunds(price, true)
-    })
-
-    it('should fail to set the sell-out price if not allowed', async () => {
-        const price = item1.sellout.ether
-        expect(fractifInstance.connect(buyer1).setSelloutPrice(item1.id, price, "0x0000000000000000000000000000000000000000"))
-            .to.be.reverted
     })
 
     const sendTokensFromOwnerToAccount3 = async (value: number = 100): Promise<BigNumber> => {
