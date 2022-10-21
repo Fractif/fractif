@@ -197,7 +197,7 @@ describe("FractifV1", () => {
                 .to.equal(fakeToken.address)
             const previousSaleTimestamp = await fractifInstance.tokenPreviousSaleTimestamp(item1.id)
             expect(previousSaleTimestamp)
-                .to.be.closeTo(timestamp, 10, "Previous sale timestamp should be +/- 10 seconds to now")
+                .to.be.closeTo(timestamp, 60, "Previous sale timestamp should be +/- 60 seconds to now")
         })
     
         it('should fail to set the sell-out price if not allowed', async () => {
