@@ -191,10 +191,13 @@ describe("FractifV1", () => {
             await canAddApprovedCoin()
             await allowFractifToSpendFakeToken(fakeToken, fractifInstance, price, owner.address)
             await setTheSelloutPrice(price, fakeToken.address)
+            const timestamp = Math.round(Date.now() / 1000);
             const depositedCoin = await fractifInstance.getDepositedCoin(item1.id)
             expect(depositedCoin, `Deposited coin should be '${fakeToken.address}'`)
                 .to.equal(fakeToken.address)
-            expect(0).to.be.equal(1) // Verify the timestamp
+            const previousSaleTimestamp = await fractifInstance.tokenPreviousSaleTimestamp(item1.id)
+            expect(previousSaleTimestamp)
+                .to.be.closeTo(timestamp, 10, "Previous sale timestamp should be +/- 10 seconds to now")
         })
     
         it('should fail to set the sell-out price if not allowed', async () => {
@@ -204,13 +207,19 @@ describe("FractifV1", () => {
         })
     
         it('should fail to set the sellout price if the sellout price has been set less than 7 days ago', async () => {
-            // TODO:
-            expect(0).to.be.equal(1)
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await network.provider.send("evm_increaseTime", [10])
+            expect(fractifInstance.setSelloutPrice(item1.id, toBnPowed(1000), "0x0000000000000000000000000000000000000000"))
+                .to.be.revertedWithCustomError(fractifInstance, "SelloutPriceUpdateDelayNotReached")
         })
 
         it('should fail to set the sellout price if the item has already been sold', async () => {
-            // TODO: 
-            expect(0).to.be.equal(1)
+            const price = item1.sellout.ether
+            await setTheSelloutPrice(price, "0x0000000000000000000000000000000000000000")
+            await depositFunds(price, false)
+            expect(fractifInstance.setSelloutPrice(item1.id, toBnPowed(1000), "0x0000000000000000000000000000000000000000"))
+                .to.be.revertedWithCustomError(fractifInstance, "AlreadyDeclaredSold")
         })
 
         it('should be able to reset the sellout price if it has been defined at least 7 days ago', async () => {
