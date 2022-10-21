@@ -48,6 +48,12 @@ or
 npm run coverage
 ```
 
+### Deploy to Goerli
+- Run in shell
+```sh
+npx hardhat run --network goerli scripts/deploy/prod.ts
+```
+
 ### Troubleshooting
 #### `Error: cannot estimate gas; transaction may fail or may require manual gas limit: Transaction reverted and Hardhat couldn't infer the reason.`
 ```js
@@ -63,14 +69,5 @@ networks: {
 - Run specific test
 ```sh
 npx hardhat test --grep "<pattern>"
-```
-### Coverage
-- Run in shell
-```sh
-npx hardhat coverage
-```
-or
-```sh
-npm run coverage
 ```
 
