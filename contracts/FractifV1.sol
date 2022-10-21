@@ -128,6 +128,15 @@ contract FractifV1 is
     error SelloutPriceUpdateDelayNotReached(uint256 untilTimestamp);
 
     /**
+     * @notice emmited when a token has been sold
+     */
+    event Sold(uint256 tokenId);
+    /**
+     * @notice emmited when a token has its sellout price updated
+     */
+    event SelloutPriceUpdated(uint256 tokenId,  uint256 selloutPrice, address depositedCoin);
+
+    /**
      * @notice Checks if a coin is whitelisted.
      * @param coin The address of the coin to check.
      * @return True if the coin is whitelisted, false otherwise.
@@ -202,7 +211,6 @@ contract FractifV1 is
             tokenSelloutPrice[tokenId] = selloutPrice;
             tokenDepositedCoin[tokenId] = depositedCoin;
             tokenPreviousSaleTimestamp[tokenId] = block.timestamp;
-            return true;
         } else if (
             // Current timestamp is greater than the previous sale timestamp + the delay
             block.timestamp > tokenPreviousSaleTimestamp[tokenId] + selloutPriceUpdateDelay
@@ -210,12 +218,13 @@ contract FractifV1 is
             tokenSelloutPrice[tokenId] = selloutPrice; // most likely changing to 0 to reset the sellout price
             tokenDepositedCoin[tokenId] = depositedCoin;
             tokenPreviousSaleTimestamp[tokenId] = block.timestamp;
-            return true;
         } else {
             revert SelloutPriceUpdateDelayNotReached(
                 tokenPreviousSaleTimestamp[tokenId] + selloutPriceUpdateDelay
             ); // "The sellout price can't be updated yet"
         }
+        emit SelloutPriceUpdated(tokenId, selloutPrice, depositedCoin);
+        return true;
     }
 
     /**
@@ -249,6 +258,7 @@ contract FractifV1 is
             );
         }
         sold[tokenId] = true;
+        emit Sold(tokenId);
     }
 
     /**
