@@ -26,13 +26,13 @@ const main = async () => {
     console.log("Deploying FractifV1...")
     const fractifV1Instance = await upgrades.deployProxy(FractifV1) as FractifV1
     console.log(`FractifV1 deployed at ${fractifV1Instance.address}`)
-    if (network.name === "goerli") {
+    if (["goerli", "localhost", "hardhat"].includes(network.name)) {
         console.log("Deploying the fake ERC20 token...")
         const fakeTokenErc20: FakeERC20 = await FakeErc20.deploy()
         console.log(`Fake ERC20 token deployed at ${fakeTokenErc20.address}`)
     }
     console.log("Deploying the Marketplace...")
-    const marketplaceInstance = await upgrades.deployProxy(Marketplace) as Marketplace
+    const marketplaceInstance = await upgrades.deployProxy(Marketplace, [fractifV1Instance.address]) as Marketplace
     console.log(`Marketplace deployed at ${marketplaceInstance.address}`)
     console.log("Deploying Crowdsales...")
     const crowdsalesInstance = await upgrades.deployProxy(Crowdsales, [fractifV1Instance.address]) as Crowdsales
@@ -55,9 +55,9 @@ const main = async () => {
     await fractifV1Instance.grantRole(await fractifV1Instance.MINTER_ROLE(), proposer)
     console.log("Roles granted")
 
-    if (network.name === "goerli") {
+    if (["goerli", "localhost", "hardhat"].includes(network.name)) {
         console.log("Minting some tokens for the deployer...")
-        await fractifV1Instance.mint(deployer.address, 0, ethers.utils.parseEther("1000"), "")
+        await fractifV1Instance.mint(deployer.address, 0, ethers.utils.parseEther("1000"), "0x00")
         console.log("Tokens minted")
         if (process.env.FRIEND_ADDRESS) {
             console.log("Sending some tokens to a friend...")
@@ -66,7 +66,7 @@ const main = async () => {
                 process.env.FRIEND_ADDRESS,
                 0,
                 ethers.utils.parseEther("100"),
-                ""
+                "0x00"
             )
         }
     }
