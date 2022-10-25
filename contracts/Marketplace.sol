@@ -99,6 +99,19 @@ contract Marketplace is
      */
     error TransferFailed();
 
+    /**
+     * @notice Event triggered when a listing is created
+     */
+    event ListingCreated(uint256 indexed listingId, uint256 indexed tokenId, uint256 price, uint256 amount, address indexed seller);
+    /**
+     * @notice Event triggered when a listing is cancelled
+     */
+    event ListingCancelled(uint256 indexed listingId, uint256 indexed tokenId, uint256 price, uint256 amount, address indexed seller);
+    /**
+     * @notice Event triggered when a listing is sold
+     */
+    event ListingSold(uint256 indexed listingId, uint256 indexed tokenId, uint256 price, uint256 amount, address seller, address indexed buyer);
+
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
@@ -160,7 +173,7 @@ contract Marketplace is
             state: ListingStatus.ACTIVE
         });
 
-        // TODO: Emit listing created event
+        emit ListingCreated(listingId, _tokenId, _price, _amount, msg.sender);
     }
 
     /**
@@ -183,7 +196,13 @@ contract Marketplace is
         // Then we remove the listing
         listings[_listingId].state = ListingStatus.CANCELLED;
 
-        // TODO: Emit listing deactivated event
+        emit ListingCancelled(
+            listings[_listingId].id,
+            listings[_listingId].tokenId,
+            listings[_listingId].price,
+            listings[_listingId].amount,
+            listings[_listingId].seller
+        );
     }
 
     function reactivateListing(uint256 _listingId) public {
@@ -228,6 +247,15 @@ contract Marketplace is
 
         // Then set the listing as sold
         listings[_listingId].state = ListingStatus.SOLD;
+
+        emit ListingSold(
+            listings[_listingId].id,
+            listings[_listingId].tokenId,
+            listings[_listingId].price,
+            listings[_listingId].amount,
+            listings[_listingId].seller,
+            msg.sender
+        );
     }
 
     function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
