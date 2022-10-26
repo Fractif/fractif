@@ -11,6 +11,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
 const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY!
+const ALCHEMY_OPTIMISM_GOERLI_API_KEY = process.env.ALCHEMY_OPTIMISM_GOERLI_API_KEY
 
 const config: HardhatUserConfig = {
     solidity: {
@@ -37,6 +38,12 @@ const config: HardhatUserConfig = {
             accounts: [GOERLI_PRIVATE_KEY],
             allowUnlimitedContractSize: true,
             timeout: 1000000
+        },
+        optimismGoerli: {
+            url: `https://opt-goerli.g.alchemy.com/v2/${ALCHEMY_OPTIMISM_GOERLI_API_KEY}`,
+            accounts: [GOERLI_PRIVATE_KEY],
+            allowUnlimitedContractSize: true,
+            timeout: 1000000
         }
     },
     etherscan: {
@@ -47,7 +54,9 @@ const config: HardhatUserConfig = {
         coinmarketcap: process.env.COINMARKETCAP_API_KEY,
         outputFile: 'gas-report.txt',
         noColors: true,
-        showTimeSpent: true
+        showTimeSpent: true,
+        token: "ETH",
+        gasPriceApi: "https://api-optimistic.etherscan.io/api?module=proxy&action=eth_gasPrice"
     }
 }
 
