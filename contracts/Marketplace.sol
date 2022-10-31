@@ -124,7 +124,7 @@ contract Marketplace is
         __Pausable_init();
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         fractifApp = _fractifApp;
-        platformFeePercent = 2000; // 20% of the price
+        platformFeePercent = 200; // 20% of the price
     }
 
     /**
