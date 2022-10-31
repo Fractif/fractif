@@ -1,5 +1,5 @@
 import { ethers, upgrades, network } from "hardhat"
-import { FractifV1, TimelockController, Crowdsales, FakeERC20, Frac, Marketplace } from "@types/contracts"
+import { FractifV1, TimelockController, Crowdsales, FakeERC20, Frac, Marketplace } from "@typesDir/contracts"
 
 const main = async () => {
     // Both the executor and the proposer must be the Gnosis Safe address.
