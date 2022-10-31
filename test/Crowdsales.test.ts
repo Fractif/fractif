@@ -1,7 +1,7 @@
 import { ethers, network, upgrades } from "hardhat"
 import { toBnPowed } from "./utils"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
-import { FractifV1, Crowdsales, FakeERC20 } from "../types/contracts"
+import { FractifV1, Crowdsales, FakeERC20 } from "@typesDir/contracts"
 import { expect } from "chai"
 
 describe("Crowdsales", () => {

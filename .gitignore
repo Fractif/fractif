@@ -23,4 +23,6 @@ artifacts
 .openzeppelin
 
 types
+typesDir
 .next
+gas-report.txt

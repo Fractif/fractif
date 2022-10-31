@@ -1,7 +1,7 @@
 import { ethers, upgrades } from 'hardhat'
 import { expect } from 'chai'
 import { BigNumber } from 'ethers'
-import { Marketplace, FractifV1 } from '../types/contracts'
+import { Marketplace, FractifV1 } from '@typesDir/contracts'
 import { genItemForSale, Item, toBnPowed } from './utils'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { MarketplaceListingState } from '../utils/marketplace'
