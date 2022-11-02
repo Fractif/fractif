@@ -1,6 +1,8 @@
 import { ethers, upgrades, network } from "hardhat"
 import { FractifV1, TimelockController, Crowdsales, FakeERC20, Frac, Marketplace } from "@typesDir/contracts"
 
+const testnets = ["goerli", "localhost", "hardhat", "optimisticGoerli"]
+
 const main = async () => {
     // Both the executor and the proposer must be the Gnosis Safe address.
     // In the near future, we'll set the Governance contract as the executor and the proposer.
@@ -26,7 +28,7 @@ const main = async () => {
     console.log("Deploying FractifV1...")
     const fractifV1Instance = await upgrades.deployProxy(FractifV1) as FractifV1
     console.log(`FractifV1 deployed at ${fractifV1Instance.address}`)
-    if (["goerli", "localhost", "hardhat"].includes(network.name)) {
+    if (testnets.includes(network.name)) {
         console.log("Deploying the fake ERC20 token...")
         const fakeTokenErc20: FakeERC20 = await FakeErc20.deploy()
         console.log(`Fake ERC20 token deployed at ${fakeTokenErc20.address}`)
@@ -55,7 +57,7 @@ const main = async () => {
     await fractifV1Instance.grantRole(await fractifV1Instance.MINTER_ROLE(), proposer)
     console.log("Roles granted")
 
-    if (["goerli", "localhost", "hardhat"].includes(network.name)) {
+    if (testnets.includes(network.name)) {
         console.log("Minting some tokens for the deployer...")
         await fractifV1Instance.mint(deployer.address, 0, ethers.utils.parseEther("1000"), "0x00")
         console.log("Tokens minted")
