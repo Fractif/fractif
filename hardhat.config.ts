@@ -39,7 +39,7 @@ const config: HardhatUserConfig = {
             allowUnlimitedContractSize: true,
             timeout: 1000000
         },
-        optimismGoerli: {
+        optimisticGoerli: {
             url: `https://opt-goerli.g.alchemy.com/v2/${ALCHEMY_OPTIMISM_GOERLI_API_KEY}`,
             accounts: [GOERLI_PRIVATE_KEY],
             allowUnlimitedContractSize: true,
@@ -47,7 +47,10 @@ const config: HardhatUserConfig = {
         }
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY
+        apiKey: {
+            mainnet: process.env.ETHERSCAN_API_KEY!,
+            optimisticGoerli: process.env.ETHERSCAN_OPTIMISTIC_API_KEY!
+        },
     },
     gasReporter: {
         enabled: (process.env.REPORT_GAS) ? true : false,
