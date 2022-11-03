@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, Button, Stack, Text } from '@mantine/core';
 import { useWeb3React } from "@web3-react/core";
+import { IconAppWindow } from '@tabler/icons';
 
 //Wallet components
 import WalletConnectButtonGroup from '@components/wallet/walletConnectButtonGroup';
@@ -29,7 +30,14 @@ export default function SelectWalletModal() {
                     <WalletWarningTab />
                 </Stack>
             </Modal>
-            <Button size="md" onClick={() => active ? undefined : setOpened(true)}>
+            <Button rightIcon={<IconAppWindow />} styles={(theme) => ({
+                root: {
+                    borderRadius: theme.radius.md,
+                    width: '220px',
+                    backgroundColor: theme.primaryColor,
+                },
+            })}
+                size="md" onClick={() => active ? undefined : setOpened(true)}>
                 {active ?
                     <Text>
                         {account ? account.slice(0, 6) + "..." + account.slice(account.length - 4, account.length) : "Connect"}

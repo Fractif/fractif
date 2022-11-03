@@ -25,6 +25,13 @@ export default function App(props: AppProps) {
 				theme={{
 					/** Put your mantine theme override here */
 					colorScheme: 'light',
+					primaryColor: 'blue',
+					radius: {
+						sm: 4,
+						md: 10,
+						lg: 12,
+						xl: 16,
+					}
 				}}
 			>
 				<Web3ReactProvider getLibrary={getLibrary}>
