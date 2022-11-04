@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { Providers } from '@components/mantine/provider'
+import Navbar from '@components/navbar'
 
 export default function RootLayout({
     children,
@@ -8,12 +9,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-        <Head>
-            <title>Page title</title>
-            <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        </Head>
         <body>
             <Providers>
+                <Navbar />
                 {children}
             </Providers>
         </body>
