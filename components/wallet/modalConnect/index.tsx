@@ -34,7 +34,7 @@ export default function SelectWalletModal() {
                 root: {
                     borderRadius: theme.radius.md,
                     width: '220px',
-                    backgroundColor: theme.primaryColor,
+                    backgroundColor: theme.colors.brand[4],
                 },
             })}
                 size="md" onClick={() => active ? undefined : setOpened(true)}>

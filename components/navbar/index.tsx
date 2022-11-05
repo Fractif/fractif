@@ -9,17 +9,12 @@ import {
     Burger,
     Drawer,
     ScrollArea,
-    Center
+    Container
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import SelectWalletModal from '@components/wallet/modalConnect';
 
 const useStyles = createStyles((theme) => ({
-    box :{
-        width: '80%',
-        paddingBottom: 120,
-        margin: 'auto',
-    },
     header: {
         borderBottom : '0px solid #eaeaea',
     },
@@ -40,7 +35,7 @@ export default function Navbar() {
     const { classes, theme } = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Container>
             <Header height={60} px="md" className={classes.header}>
                 <Group position="apart" sx={{ height: '100%' }}>
                     Logo
@@ -68,6 +63,6 @@ export default function Navbar() {
                     </Group>
                 </ScrollArea>
             </Drawer>
-        </Box>
+        </Container>
     );
 }
