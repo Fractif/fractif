@@ -1,12 +1,12 @@
 import Link from 'next/link'
 
+//Import landing page components
+import Hero from '@components/landingpage/hero'
+
 export default function LandingPage() {
     return (
-        <div>
-            <h1>My page</h1>
-            <Link href="/about">
-                About
-            </Link>
-        </div>
+        <>
+            <Hero />
+        </>
     )
 }
