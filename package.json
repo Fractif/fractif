@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "npm run typechain && next build",
     "start": "next start",
     "type-check": "tsc",
     "typechain": "npx hardhat typechain",
