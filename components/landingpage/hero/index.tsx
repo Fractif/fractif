@@ -59,9 +59,8 @@ const useStyles = createStyles((theme) => ({
         [theme.fn.smallerThan('xs')]: {
             fontSize: 35,
         },
-
         [theme.fn.smallerThan('lg')]: {
-            fontSize: 65,
+            fontSize: 55,
         },
     },
 
@@ -88,6 +87,7 @@ export default function Hero() {
     const { height, width } = useViewportSize();
     const { classes } = useStyles();
     return (
+        <div>
         <Container>
             <div className={classes.inner}>
                 <div className={classes.content}>
@@ -106,5 +106,6 @@ export default function Hero() {
                 <Image src="/hero.png" className={classes.image} />
             </div>
         </Container>
+        </div>
     );
 }

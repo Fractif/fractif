@@ -22,12 +22,12 @@ const useStyles = createStyles((theme) => ({
             flex: 1,
             fontSize: 16,
             height: "40px",
-            width: "140px"
+            width: "135px"
         },
         [theme.fn.smallerThan('lg')]: {
             fontSize: 18,
             height: "40px",
-            width: "180px"
+            width: "170px"
         },
     },
 }));
