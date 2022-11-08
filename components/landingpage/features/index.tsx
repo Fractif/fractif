@@ -1,97 +1,105 @@
 'use client'
-import {
-    createStyles,
-    Image,
-    Container,
-    Title,
-    Button,
-    Group,
-    Text,
-    List,
-    Box,
-    ThemeIcon,
-    useMantineTheme
-} from '@mantine/core';
+import { createStyles, Title, SimpleGrid, Text, Image, ThemeIcon, Grid, Col, Container } from '@mantine/core';
+import { IconWallet, IconChartBar, IconCircleDotted, IconFileCode } from '@tabler/icons';
 
+const useStyles = createStyles((theme) => ({
+    wrapper: {
+        backgroundColor: theme.colors.brand[0],
+    },
 
-import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock, TablerIcon } from '@tabler/icons';
+    title: {
+        fontSize: 26,
+        fontWeight: 800,
+        lineHeight: 1.1,
+        marginBottom: theme.spacing.md,
+    },
 
-export const MOCKDATA = [
+    featureDescription: {
+        alignContent: "top",
+        [theme.fn.smallerThan('xs')]: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'left',
+        },
+    },
+
+    featureCard: {
+        display: 'flex',
+        justifyContent: 'left',
+        gap: 10,
+        [theme.fn.smallerThan('xs')]: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+        },
+    }
+
+}));
+
+const features = [
     {
-        icon: IconGauge,
-        title: 'Extreme performance',
-        description:
-            'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
+        icon: IconWallet,
+        title: 'Trade in luxury goods in few clicks.',
+        description: 'With fractif invest quickly and easily thanks to our user-oriented interface.',
     },
     {
-        icon: IconUser,
-        title: 'Privacy focused',
-        description:
-            'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
+        icon: IconChartBar,
+        title: 'Track your investment',
+        description: 'Track all your investments with the analysis of all our token data through the blockchain.',
     },
     {
-        icon: IconCookie,
-        title: 'No third parties',
+        icon: IconCircleDotted,
+        title: 'No annoying focus ring',
         description:
-            'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
-    },
-    {
-        icon: IconLock,
-        title: 'Secure by default',
-        description:
-            'Although it still can’t fly, its jumping power is outstanding, in Alola the mushrooms on Paras don’t grow up quite right',
-    },
-    {
-        icon: IconMessage2,
-        title: '24/7 Support',
-        description:
-            'Rapidash usually can be seen casually cantering in the fields and plains, Skitty is known to chase around after its own tail',
+            'With new :focus-visible selector focus ring will appear only when user navigates with keyboard.',
     },
 ];
 
-
-const useStyles = createStyles((theme) => ({
-    container: {
-        backgroundColor: theme.colors.brand[0],
-        height: "100vh",
-        justifyContent: "center",
-        width: "100%"
-    },
-
-    content: {
-        [theme.fn.smallerThan('xs')]: {
-            alignContent: "center",
-            justifyContent: "center",
-        },
-    },
-}));
-
-export function Feature({ icon: Icon, title, description }: any) {
-    const theme = useMantineTheme();
-    return (
-        <div>
-            <ThemeIcon variant="light" size={40} radius={40}>
-                <Icon size={20} stroke={1.5} />
-            </ThemeIcon>
-            <Text style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}>{title}</Text>
-            <Text size="sm" color="dimmed" style={{ lineHeight: 1.6 }}>
-                {description}
-            </Text>
-        </div>
-    );
-}
-
-export default function Features() {
-    const features = MOCKDATA.map((feature, index) => <Feature {...feature} key={index} />);
+export default function FeaturesTitle() {
     const { classes } = useStyles();
+
+    const items = features.map((feature) => (
+        <div key={feature.title}
+            className={classes.featureCard}
+        >
+            <ThemeIcon
+                size={44}
+                radius="md"
+                variant="gradient"
+                gradient={{ deg: 133, from: '#0657CF', to: 'blue' }}
+            >
+                <feature.icon size={26} stroke={1.5} />
+            </ThemeIcon>
+            <div className={classes.featureDescription}>
+                <Text size="lg" pt="0" weight={500} style={{ width: "100%" }}>
+                    {feature.title}
+                </Text>
+                <Text color="dimmed" size="sm">
+                    {feature.description}
+                </Text>
+            </div>
+        </div>
+    ));
+
     return (
-        <Box className={classes.container}>
+        <div className={classes.wrapper}>
             <Container>
-                <div className={classes.content}>
-                    <Title order={1}>The amazing Luxury tokenization  of the world here</Title>
-                </div>
-                {features}
+                <Grid >
+                    <Col span={12} md={5} pb="xl">
+                        <Title className={classes.title} order={2}>
+                            This is how you invest in luxury assets.
+                        </Title>
+                    </Col>
+                    <Col span={12}>
+                        <SimpleGrid cols={3} spacing={30} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
+                            {items}
+                        </SimpleGrid>
+                    </Col>
+                </Grid>
             </Container>
-        </Box>
+        </div>
     );
 }
