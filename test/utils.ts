@@ -1,6 +1,6 @@
 import { BigNumber, utils } from "ethers"
 import { ethers } from "hardhat";
-import { FakeERC20, FractifV1 } from "@typesDir/contracts";
+import { FakeERC20, FractifV1 } from "@typechain-types/contracts";
 import { expect } from "chai"
 
 export const decimals: BigNumber = BigNumber.from(18);
