@@ -20,15 +20,30 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
-      "@typesDir/*": ["typesDir/*"],
-      "@constants/*": ["constants/*"],
-    }
+      "@components/*": [
+        "components/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@typesDir/*": [
+        "typesDir/*"
+      ],
+      "@constants/*": [
+        "constants/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

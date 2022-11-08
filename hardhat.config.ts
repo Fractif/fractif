@@ -23,9 +23,6 @@ const config: HardhatUserConfig = {
             }  
         },
     },
-    typechain: {
-        outDir: 'typesDir/contracts'
-    },
     networks: {
         hardhat: {
             allowUnlimitedContractSize: true

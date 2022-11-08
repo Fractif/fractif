@@ -1,18 +1,39 @@
-import Link from 'next/link'
-import Layout from '@components/Layout'
-import SelectWalletModal from '@components/wallet/modalConnect'
+import { BackgroundImage, createStyles } from '@mantine/core';
+
+//Import landing page components
+import Hero from '@components/landingpage/hero'
+import Features from '@components/landingpage/features'
+import Discover from '@components/landingpage/discover'
+import BannerCTA from '@components/landingpage/banner_cta';
+import Team from '@components/landingpage/team';
+
+const useStyles = createStyles((theme) => ({
+    background_effect: {
+        position: 'absolute', 
+        top: 0, 
+        right: 0, 
+        zIndex: -1, 
+        width: "30%", 
+        height: '100%'
+    },
+}));
 
 
-const IndexPage = () => (
-    <Layout title="Home | Next.js + TypeScript Example">
-        <h1>Hello Next.js 👋</h1>
-        <SelectWalletModal />
-        <p>
-            <Link href="/about">
-                <a>About</a>
-            </Link>
-        </p>
-    </Layout>
-)
+export default function LandingPage() {
+    const { classes } = useStyles();
 
-export default IndexPage
+    return (
+        <>
+            <BackgroundImage
+                src="/landing_effect.svg"
+                className={classes.background_effect}
+            />
+            <Hero />
+            <Features />
+            <Discover />
+            <BannerCTA />
+            <Team />
+
+        </>
+    )
+}

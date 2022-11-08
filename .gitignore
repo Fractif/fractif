@@ -26,3 +26,6 @@ types
 typesDir
 .next
 gas-report.txt
+
+#Vscode
+.vscode
