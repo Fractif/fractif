@@ -1,7 +1,10 @@
 import { BackgroundImage, createStyles } from '@mantine/core';
+
 //Import landing page components
 import Hero from '@components/landingpage/hero'
 import Features from '@components/landingpage/features'
+import Discover from '@components/landingpage/discover'
+
 
 const useStyles = createStyles((theme) => ({
     background_effect: {
@@ -26,6 +29,7 @@ export default function LandingPage() {
             />
             <Hero />
             <Features />
+            <Discover />
 
         </>
     )
