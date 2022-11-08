@@ -17,18 +17,18 @@ const useStyles = createStyles((theme) => ({
         borderWidth: 2,
         color: theme.colors.brand[4],
         width: "210px",
-        height: "62px",
-        fontSize: 24,
+        height: "52px",
+        fontSize: 20,
 
         [theme.fn.smallerThan('xs')]: {
             flex: 1,
             fontSize: 16,
-            height: 40,
+            height: "40px",
             width: "140px"
         },
         [theme.fn.smallerThan('lg')]: {
-            fontSize: 20,
-            height: 40,
+            fontSize: 18,
+            height: "40px",
             width: "180px"
         },
     },
