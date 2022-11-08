@@ -32,7 +32,6 @@ const useStyles = createStyles((theme) => ({
         [theme.fn.smallerThan('md')]: {
             maxWidth: '100%',
             marginRight: 0,
-            
         },
     },
 
@@ -42,12 +41,6 @@ const useStyles = createStyles((theme) => ({
         fontWeight: 750,
         [theme.fn.smallerThan('xs')]: {
             fontSize: 28,
-        },
-    },
-
-    control: {
-        [theme.fn.smallerThan('xs')]: {
-            flex: 1,
         },
     },
 

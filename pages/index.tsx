@@ -4,7 +4,7 @@ import { BackgroundImage, createStyles } from '@mantine/core';
 import Hero from '@components/landingpage/hero'
 import Features from '@components/landingpage/features'
 import Discover from '@components/landingpage/discover'
-
+import BannerCTA from '@components/landingpage/banner_cta';
 
 const useStyles = createStyles((theme) => ({
     background_effect: {
@@ -30,6 +30,7 @@ export default function LandingPage() {
             <Hero />
             <Features />
             <Discover />
+            <BannerCTA />
 
         </>
     )
