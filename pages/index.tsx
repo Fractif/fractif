@@ -5,6 +5,7 @@ import Hero from '@components/landingpage/hero'
 import Features from '@components/landingpage/features'
 import Discover from '@components/landingpage/discover'
 import BannerCTA from '@components/landingpage/banner_cta';
+import Team from '@components/landingpage/team';
 
 const useStyles = createStyles((theme) => ({
     background_effect: {
@@ -31,6 +32,7 @@ export default function LandingPage() {
             <Features />
             <Discover />
             <BannerCTA />
+            <Team />
 
         </>
     )
