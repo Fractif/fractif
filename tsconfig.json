@@ -26,8 +26,8 @@
       "@public/*": [
         "public/*"
       ],
-      "@typesDir/*": [
-        "typesDir/*"
+      "@typechain-types/*": [
+        "typechain-types/*"
       ],
       "@constants/*": [
         "constants/*"

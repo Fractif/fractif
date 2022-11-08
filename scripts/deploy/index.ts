@@ -1,5 +1,6 @@
 import { ethers, upgrades, network } from "hardhat"
-import { FractifV1, TimelockController, Crowdsales, FakeERC20, Frac, Marketplace } from "@typesDir/contracts"
+import { FractifV1, Crowdsales, FakeERC20, Marketplace } from "@typechain-types/contracts"
+import { Frac } from "@typechain-types/contracts/governance"
 
 const testnets = ["goerli", "localhost", "hardhat", "optimisticGoerli"]
 
@@ -44,7 +45,7 @@ const main = async () => {
     console.log(`Frac deployed at ${fracToken.address}`)
     console.log(`Deploying TimelockController with executor ${executor} and proposer ${proposer}...`)
     const minDelay = 60 * 60 * 24; // 1 day
-    const timelockInstance: TimelockController = await Timelock.deploy(minDelay, [proposer], [executor])
+    const timelockInstance = await Timelock.deploy(minDelay, [proposer], [executor])
     console.log(`TimelockController deployed at ${timelockInstance.address}`)
 
     // Grant roles to contracts

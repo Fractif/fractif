@@ -4,7 +4,7 @@ import { BigNumber } from "ethers"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 
 import { expect } from "chai"
-import { FakeERC20, FractifV1, IERC1155Upgradeable__factory, IERC165__factory } from "@typesDir/contracts/"
+import { FakeERC20, FractifV1, IERC1155Upgradeable__factory, IERC165__factory } from "@typechain-types/contracts/"
 import { toBnPowed, allowFractifToSpendFakeToken, genItemForSale, getInterfaceID } from "./utils"
 import { assert } from "console"
 
