@@ -67,8 +67,3 @@ networks: {
     }
 }
 ```
-- Run specific test
-```sh
-npx hardhat test --grep "<pattern>"
-```
-
