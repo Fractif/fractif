@@ -16,7 +16,8 @@ import SelectWalletModal from '@components/wallet/modalConnect';
 
 const useStyles = createStyles((theme) => ({
     header: {
-        borderBottom : '0px solid #eaeaea',
+        backgroundColor: "#FFFFFF00",
+        borderBottom : '0px',
     },
     hiddenMobile: {
         [theme.fn.smallerThan('sm')]: {
@@ -35,7 +36,7 @@ export default function Navbar() {
     const { classes, theme } = useStyles();
 
     return (
-        <Container>
+        <Container p={0}>
             <Header height={60} px="md" className={classes.header}>
                 <Group position="apart" sx={{ height: '100%' }}>
                     Logo
