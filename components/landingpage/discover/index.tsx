@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
     title: {
         fontSize: 44,
         lineHeight: 1.2,
-        fontWeight: 900,
+        fontWeight: 750,
         [theme.fn.smallerThan('xs')]: {
             fontSize: 28,
         },
