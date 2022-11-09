@@ -1,102 +1,80 @@
-'use client'
-import { createStyles, Title, SimpleGrid, Text, Image, Box, Stack, Col, Container } from '@mantine/core';
+import { createStyles, Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
+import image from '/public/faq.svg';
 import DiscordButton from '@components/buttons/discord';
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
-        backgroundColor: theme.colors.brand[0],
+        paddingTop: theme.spacing.xl * 2,
+        paddingBottom: theme.spacing.xl * 2,
     },
 
     title: {
-        fontSize: 87,
-        fontWeight: 800,
-        lineHeight: 1.1,
         marginBottom: theme.spacing.md,
-        [theme.fn.smallerThan('md')]: {
-            fontSize: 45,
-        },
+        paddingLeft: theme.spacing.md,
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    },
+
+    item: {
+        fontSize: theme.fontSizes.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
     },
 
     blueDot: {
         color: theme.colors.brand[4]
     },
-
-    containerTitle: {
+    ctaDiscord:{
+        paddingTop: theme.spacing.xl,
+        width: "100%",
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "left",
-        alignItems: "center",
-    },
-
-    amaWrapper:{
-        [theme.fn.smallerThan('xs')]: {
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-
-    },
-
-    amaQuestion: {
-        fontSize: 20,
-        fontWeight: 700,
-    },
-    amaAnswer:{
-        fontSize: 16,
+        justifyContent: "center",
+        alignContent:"center"
     }
-
 }));
 
-
-const QuestionsList = [
+const Questionlist = [
     {
-        question: 'How can I reset my password ',
-        answer: "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon. ",
+        key: "1",
+        title: 'What’s the goal of Fractif',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
     },
     {
-        question: 'Can I create more that one account ',
-        answer: "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. ",
+        key: "2",
+        title: 'Where can I resell my tokens',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
     },
     {
-        question: 'How can I reset my password ',
-        answer: "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon. ",
+        key: "3",
+        title: 'How can I now the upcoming items',
+        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
     },
-    {
-        question: 'Can I create more that one account ',
-        answer: "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. ",
-    },
-];
-
+]
 export default function Ama() {
     const { classes } = useStyles();
-
     return (
-        <>
-            <div>
-
-                <div className={classes.wrapper}>
-                    <Container className={classes.containerTitle}>
-                        <Title className={classes.title}>AMA<span className={classes.blueDot}>.</span></Title>
-                    </Container>
-                </div>
-
-                <Container className={classes.amaWrapper}>
-                    <div>
-                        {
-                            QuestionsList.map((item, index) => (
-                                <Box key={index} pb="xl">
-                                    <Stack dir="column" spacing="md">
-                                        <Text className={classes.amaQuestion}>{item.question}<span className={classes.blueDot}>?</span></Text>
-                                        <Text className={classes.amaAnswer}>{item.answer}</Text>
-                                    </Stack>
-                                </Box>
-                            ))
-                        }
-                    </div>
-                    <DiscordButton />
-                </Container>
-            </div>
-        </>
+        <div className={classes.wrapper}>
+            <Container size="lg">
+                <Grid id="faq-grid" gutter={50}>
+                    <Col span={12} md={6}>
+                        <Image src={image.src} alt="Frequently Asked Questions" />
+                    </Col>
+                    <Col span={12} md={6}>
+                        <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
+                            {
+                                Questionlist.map((item) => (
+                                    <Accordion.Item className={classes.item} value={item.key}>
+                                    <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
+                                    <Accordion.Panel>{item.answer}</Accordion.Panel>
+                                </Accordion.Item>
+                                ))
+                            }
+                        </Accordion>
+                        <div className={classes.ctaDiscord}>
+                            <DiscordButton/>
+                        </div>
+                    </Col>
+                </Grid>
+            </Container>
+        </div>
     );
 }
