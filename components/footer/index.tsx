@@ -13,6 +13,7 @@ const useStyles = createStyles((theme) => ({
 
     footerHeader: {
         maxWidth: "100%",
+        width: "100%",
         [theme.fn.smallerThan('sm')]: {
             display: 'flex',
             flexDirection: 'column',
@@ -49,7 +50,8 @@ const useStyles = createStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
-        width: "100%",
+        width: "fit-content",
+        height: "fit-content",
         [theme.fn.smallerThan('sm')]: {
             flexDirection: 'column',
             alignItems: 'center',
@@ -112,11 +114,10 @@ const useStyles = createStyles((theme) => ({
         padding: 4,
     },
 
-    NewsletterTitle :{
+    newsletterTitle :{
         marginBottom: 20,
     },
-    NewsletterCta :{
-    }
+
 }));
 
 const SocialList = [
@@ -142,8 +143,8 @@ export default function Footer() {
 
     return (
         <footer className={classes.footer}>
-            <Container className={classes.NewsletterCta}>
-                <Title className={classes.NewsletterTitle}>Stay up to date <span className={classes.blueDot}>.</span></Title>
+            <Container >
+                <Title className={classes.newsletterTitle}>Stay up to date <span className={classes.blueDot}>.</span></Title>
                 <div className={classes.newsletterForm}>
                     <Input placeholder="Enter your email" variant="unstyled" icon={<IconMail size={18} stroke={1.5} />} />
                     <ActionIcon size="lg" className={classes.newsletterButton}>
@@ -152,7 +153,7 @@ export default function Footer() {
             </div>
             </Container>
 
-            <Container className={classes.inner}>
+            <Container className={classes.inner} p={0}>
                 <div className={classes.footerHeader}>
                     <Image src="/fractif.png" alt="Fractif Logo" />
                     <div className={classes.footerLinks}>
