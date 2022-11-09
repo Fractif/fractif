@@ -144,7 +144,7 @@ export default function Footer() {
     return (
         <footer className={classes.footer}>
             <Container >
-                <Title className={classes.newsletterTitle}>Stay up to date <span className={classes.blueDot}>.</span></Title>
+                <Title className={classes.newsletterTitle}>Stay up to date<span className={classes.blueDot}>.</span></Title>
                 <div className={classes.newsletterForm}>
                     <Input placeholder="Enter your email" variant="unstyled" icon={<IconMail size={18} stroke={1.5} />} />
                     <ActionIcon size="lg" className={classes.newsletterButton}>
