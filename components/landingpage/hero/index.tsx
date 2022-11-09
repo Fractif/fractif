@@ -84,7 +84,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function Hero() {
-    const { height, width } = useViewportSize();
     const { classes } = useStyles();
     return (
         <div>
