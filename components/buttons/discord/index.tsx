@@ -1,44 +1,38 @@
 import {
     createStyles,
-    Image,
-    Container,
-    Title,
     Button,
-    Group,
-    Text,
-    List,
-    ThemeIcon,
 } from '@mantine/core';
 
+import { IconBrandDiscord } from '@tabler/icons';
+
 const useStyles = createStyles((theme) => ({
-    secondary: {
+    primary: {
+        backgroundColor: theme.colors.brand[4],
         borderRadius: 5,
-        borderColor: theme.colors.brand[4],
-        borderWidth: 2,
-        color: theme.colors.brand[4],
-        width: "210px",
+        width: "310",
         height: "52px",
+        fontWeight: 500,
         fontSize: 20,
 
         [theme.fn.smallerThan('xs')]: {
             flex: 1,
             fontSize: 16,
             height: "40px",
-            width: "135px"
+            width: "310px"
         },
         [theme.fn.smallerThan('lg')]: {
             fontSize: 18,
             height: "40px",
-            width: "170px"
+            width: "310px"
         },
     },
 }));
 
-export default function SecondaryButton({title = "Secondary Button"}: {title: string}) {
+export default function DiscordButton() {
     const { classes } = useStyles();
     return (
-        <Button className={classes.secondary} variant="default">
-            {title}
+        <Button className={classes.primary} leftIcon={<IconBrandDiscord />}>
+            Join us on discord
         </Button>
     );
 }

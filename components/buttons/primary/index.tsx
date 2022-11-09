@@ -13,7 +13,7 @@ import {
 const useStyles = createStyles((theme) => ({
     primary: {
         backgroundColor: theme.colors.brand[4],
-        borderRadius: 10,
+        borderRadius: 5,
         width: "210px",
         height: "52px",
         fontSize: 20,
