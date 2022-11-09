@@ -1,11 +1,8 @@
 'use client'
 import {
-    createStyles,
     Header,
     Group,
-    Button,
     Divider,
-    Box,
     Burger,
     Drawer,
     ScrollArea,
@@ -13,23 +10,8 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import SelectWalletModal from '@components/wallet/modalConnect';
+import { useStyles } from './index.style';
 
-const useStyles = createStyles((theme) => ({
-    header: {
-        backgroundColor: "#FFFFFF00",
-        borderBottom : '0px',
-    },
-    hiddenMobile: {
-        [theme.fn.smallerThan('sm')]: {
-            display: 'none',
-        },
-    },
-    hiddenDesktop: {
-        [theme.fn.largerThan('sm')]: {
-            display: 'none',
-        },
-    },
-}));
 
 export default function Navbar() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
