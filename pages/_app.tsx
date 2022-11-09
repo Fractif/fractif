@@ -7,6 +7,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import Navbar from '@components/navbar';
+import Footer from '@components/footer';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -49,7 +50,6 @@ export default function App(props: AppProps) {
             md: 768,
             lg: 992,
             xl: 1200,
-            xxl: 1600,
           },
           primaryColor: 'brand',
           components: {
@@ -71,6 +71,7 @@ export default function App(props: AppProps) {
         <Web3ReactProvider getLibrary={getLibrary}>
           <Navbar />
           <Component {...pageProps} />
+          <Footer />
         </Web3ReactProvider>
       </MantineProvider>
     </>
