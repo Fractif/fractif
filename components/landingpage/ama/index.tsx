@@ -11,8 +11,6 @@ const useStyles = createStyles((theme) => ({
     title: {
         marginBottom: theme.spacing.md,
         paddingLeft: theme.spacing.md,
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     },
 
     item: {
@@ -23,13 +21,38 @@ const useStyles = createStyles((theme) => ({
     blueDot: {
         color: theme.colors.brand[4]
     },
-    ctaDiscord:{
+    ctaDiscord: {
         paddingTop: theme.spacing.xl,
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        alignContent:"center"
-    }
+        alignContent: "center"
+    },
+
+    wrapperbannerComponent: {
+        backgroundColor: theme.colors.brand[0],
+    },
+
+    titleBannerComponent: {
+        fontSize: 87,
+        fontWeight: 800,
+        lineHeight: 1.1,
+        marginBottom: theme.spacing.md,
+        [theme.fn.smallerThan('md')]: {
+            fontSize: 45,
+        },
+    },
+
+    containerBannerComponent: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "left",
+        alignItems: "center",
+    },
+
+
+
+
 }));
 
 const Questionlist = [
@@ -49,32 +72,41 @@ const Questionlist = [
         answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
     },
 ]
+
 export default function Ama() {
     const { classes } = useStyles();
     return (
-        <div className={classes.wrapper}>
-            <Container size="lg">
-                <Grid id="faq-grid" gutter={50}>
-                    <Col span={12} md={6}>
-                        <Image src={image.src} alt="Frequently Asked Questions" />
-                    </Col>
-                    <Col span={12} md={6}>
-                        <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
-                            {
-                                Questionlist.map((item) => (
-                                    <Accordion.Item className={classes.item} value={item.key}>
-                                    <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
-                                    <Accordion.Panel>{item.answer}</Accordion.Panel>
-                                </Accordion.Item>
-                                ))
-                            }
-                        </Accordion>
-                        <div className={classes.ctaDiscord}>
-                            <DiscordButton/>
-                        </div>
-                    </Col>
-                </Grid>
-            </Container>
-        </div>
+        <>
+            <div className={classes.wrapperbannerComponent}>
+                <Container className={classes.containerBannerComponent}>
+                    <Title className={classes.titleBannerComponent}>AMA<span className={classes.blueDot}>.</span></Title>
+                </Container>
+            </div>
+
+            <div className={classes.wrapper}>
+                <Container size="lg">
+                    <Grid id="faq-grid" gutter={50}>
+                        <Col span={12} md={6}>
+                            <Image src={image.src} alt="Frequently Asked Questions" />
+                        </Col>
+                        <Col span={12} md={6}>
+                            <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
+                                {
+                                    Questionlist.map((item) => (
+                                        <Accordion.Item className={classes.item} value={item.key}>
+                                            <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
+                                            <Accordion.Panel>{item.answer}</Accordion.Panel>
+                                        </Accordion.Item>
+                                    ))
+                                }
+                            </Accordion>
+                            <div className={classes.ctaDiscord}>
+                                <DiscordButton />
+                            </div>
+                        </Col>
+                    </Grid>
+                </Container>
+            </div>
+        </>
     );
 }
