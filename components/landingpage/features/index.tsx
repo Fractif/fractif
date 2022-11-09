@@ -1,43 +1,7 @@
 'use client'
-import { createStyles, Title, SimpleGrid, Text, Image, ThemeIcon, Grid, Col, Container } from '@mantine/core';
-import { IconWallet, IconChartBar, IconCircleDotted, IconFileCode } from '@tabler/icons';
-
-const useStyles = createStyles((theme) => ({
-    wrapper: {
-        backgroundColor: theme.colors.brand[0],
-    },
-
-    title: {
-        fontSize: 26,
-        fontWeight: 800,
-        lineHeight: 1.1,
-        marginBottom: theme.spacing.md,
-    },
-
-    featureDescription: {
-        alignContent: "top",
-        [theme.fn.smallerThan('xs')]: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'left',
-        },
-    },
-
-    featureCard: {
-        display: 'flex',
-        justifyContent: 'left',
-        gap: 10,
-        [theme.fn.smallerThan('xs')]: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 20,
-        },
-    }
-
-}));
+import { Title, SimpleGrid, Text, ThemeIcon, Grid, Col, Container } from '@mantine/core';
+import { IconWallet, IconChartBar, IconCircleDotted } from '@tabler/icons';
+import { useStyles } from './index.style';
 
 const features = [
     {
