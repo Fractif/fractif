@@ -1,5 +1,5 @@
 'use client'
-import { Title, SimpleGrid, Text, Image, Box, Container } from '@mantine/core';
+import { Title, Image, Container } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useStyles } from './index.style';
 
@@ -22,7 +22,7 @@ const TeamList = [
 ];
 
 export default function Roadmap() {
-    const { classes } = useStyles();
+    const { classes, theme } = useStyles();
     const { width } = useViewportSize();
     return (
         <>
@@ -32,7 +32,7 @@ export default function Roadmap() {
                 </Container>
             </div>
             {
-                width > 768 ?
+                width > theme.breakpoints.md ?
                     <Container >
                         <Image src={"./roadmap-desktop.svg"} alt="roadmap" />
                     </Container>

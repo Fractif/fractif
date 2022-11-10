@@ -8,6 +8,7 @@ import {
     ScrollArea,
     Container
 } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import { useDisclosure } from '@mantine/hooks';
 import SelectWalletModal from '@components/wallet/modalConnect';
 import { useStyles } from './index.style';
@@ -16,16 +17,20 @@ import { useStyles } from './index.style';
 export default function Navbar() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const { classes, theme } = useStyles();
+    const { width } = useViewportSize();
 
     return (
-        <Container p={0}>
+        <Container pb={0}>
             <Header height={60} px="md" className={classes.header}>
                 <Group position="apart" sx={{ height: '100%' }}>
                     Logo
-                    <Group className={classes.hiddenMobile}>
-                        <SelectWalletModal />
-                    </Group>
-                    <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
+                    {
+                        width > theme.breakpoints.sm ?
+                            <Group>
+                                <SelectWalletModal />
+                            </Group> :
+                            <Burger opened={drawerOpened} onClick={toggleDrawer} />
+                    }
                 </Group>
             </Header>
 
