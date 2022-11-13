@@ -8,7 +8,7 @@ const defaultOpts = { useCache: true }
  * Note: This helper tries to imitate what the query hooks of `graphql-hooks`
  * do internally to make sure we generate the same cache key
  */
-export default async function graphQLReques(
+export default async function graphQLRequest(
     client: GraphQLClient, 
     query: string | null, 
     options: UseClientRequestOptions<any, object>
