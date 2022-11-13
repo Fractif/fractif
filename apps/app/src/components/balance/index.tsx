@@ -9,12 +9,14 @@ export const BALANCE_QUERY = `
     }
 `
 
+const variables = {id: '0xd0b8ba8eeee4425dd97c4b13757f778045677710/0x0/0x932848f2266650e7708510fcce5e5cbcb9bb2e20'}
+
 export const balanceOptions = () => ({
-    variables: {id: '0xd0b8ba8eeee4425dd97c4b13757f778045677710/0x0/0x932848f2266650e7708510fcce5e5cbcb9bb2e20'}
+    variables
 })
 
 const Balance = () => {
-    const { loading, error, data, refetch } = useQuery(BALANCE_QUERY, balanceOptions)
+    const { loading, error, data, refetch } = useQuery(BALANCE_QUERY, {variables})
     
     if (data) {
         console.log(data)

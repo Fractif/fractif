@@ -76,7 +76,7 @@ export default function Home() {
 export async function getStaticProps() {
     const client = initializeGraphQL()
 
-    await graphQLRequest(client, BALANCE_QUERY, balanceOptions())
+    await graphQLRequest.default(client, BALANCE_QUERY, balanceOptions())
 
     return {
         props: {
