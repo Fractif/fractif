@@ -59,66 +59,49 @@ const ListItem = [
         trending_percent: "+12,35%",
         image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469929074569316/png-transparent-porsche-918-spyder-porsche-carrera-gt-international-motor-show-germany-old-car-car-roadster-computer-wallpaper-removebg-preview.png"
     },
-
 ]
+
+function CardRendering({item} : {item: {title: string, trending_percent: string, image: string}}) {
+    const { classes } = useStyles();
+    return(
+        <Card p="xl" radius="md" className={classes.card}>
+        <Card.Section inheritPadding py="xs" className={classes.cardHeader}>
+            <IconTrendingUp />
+        </Card.Section>
+        <div className={classes.cardWrapper}>
+
+            <div className={classes.cardImage}>
+                <Image
+                    width={100}
+                    height={75}
+                    src={item.image}
+                />
+            </div>
+            <div className={classes.cardData}>
+                <Text className={classes.cardTitle}>
+                    {item.title}
+                </Text>
+                <Text size="xs" className={classes.cardDescription}>
+                    {item.trending_percent}
+                </Text>
+            </div>
+        </div>
+    </Card>
+    )
+}
 export default function BannerItems() {
     const { classes } = useStyles();
-
     return (
         <div className={classes.containerWrapper}>
             <SimpleGrid cols={4} p={10} className={classes.cardFirstRow}>
                 {ListItem.slice(0, 5).map((item) => (
-                    <Card p="xl" radius="md" className={classes.card}>
-                        <Card.Section inheritPadding py="xs" className={classes.cardHeader}>
-                            <IconTrendingUp />
-                        </Card.Section>
-                        <div className={classes.cardWrapper}>
-
-                            <div className={classes.cardImage}>
-                                <Image
-                                    width={100}
-                                    height={75}
-                                    src={item.image}
-                                />
-                            </div>
-                            <div className={classes.cardData}>
-                                <Text className={classes.cardTitle}>
-                                    {item.title}
-                                </Text>
-                                <Text size="xs" className={classes.cardDescription}>
-                                    {item.trending_percent}
-                                </Text>
-                            </div>
-                        </div>
-                    </Card>
+                    <CardRendering item={item} />
                 ))
                 }
             </SimpleGrid>
             <SimpleGrid cols={4} p={10} className={classes.cardSecondRow}>
                 {ListItem.slice(4, 9).map((item) => (
-                    <Card p="xl" radius="md" className={classes.card}>
-                        <Card.Section inheritPadding py="xs" className={classes.cardHeader}>
-                            <IconTrendingUp />
-                        </Card.Section>
-                        <div className={classes.cardWrapper}>
-
-                            <div className={classes.cardImage}>
-                                <Image
-                                    width={100}
-                                    height={75}
-                                    src={item.image}
-                                />
-                            </div>
-                            <div className={classes.cardData}>
-                                <Text className={classes.cardTitle}>
-                                    {item.title}
-                                </Text>
-                                <Text size="xs" className={classes.cardDescription}>
-                                    {item.trending_percent}
-                                </Text>
-                            </div>
-                        </div>
-                    </Card>
+                    <CardRendering item={item} />
                 ))
                 }
             </SimpleGrid>
