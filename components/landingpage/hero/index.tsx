@@ -24,11 +24,11 @@ export default function Hero() {
             <div className={classes.inner}>
                 <div className={classes.content}>
                     <Title className={classes.title}>
-                        Discover Invest ,& Sell  <div className={classes.TitleColor}>Extroaridinary</div> Luxury Assets
+                    The right way to invest in  <span className={classes.TitleColor}>luxury.</span>
                     </Title>
                     <Text color="dimmed" mt="md" className={classes.subtitle} >
-                        The Leading luxury tokenization objects on Ethereum
-                        Invest in part of items and get awesome ROI.
+                    Collect tokens tied to luxury assets on Ethereum.
+                    Invest in fractions of luxury goods and diversify your portfolio.
                     </Text>
                     <Group mt={30} className={classes.groupButton}>
                         <SecondaryButton title={"Discover"} />

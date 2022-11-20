@@ -7,17 +7,27 @@ const Questionlist = [
     {
         key: "1",
         title: 'What’s the goal of Fractif',
-        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
+        answer: 'Take this Rolex Pepsi, if Alice wanted to buy only a fraction of it, let’s say 20$, she could either participate in the crowdsale or buy it from Bob on our marketplace.',
     },
     {
         key: "2",
-        title: 'Where can I resell my tokens',
-        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
+        title: 'How can I purchase assets tokens',
+        answer: 'Join our discord & newsletter to stay in touch and know about the upcoming assets.',
     },
     {
         key: "3",
-        title: 'How can I now the upcoming items',
-        answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi ac phasellus placerat a pellentesque tellus sed.',
+        title: 'Where can I resell my tokens',
+        answer: 'For the moment you can only resell your tokens via Opensea. Check the roadmap to be alerted of the release of Fractif marketplace.',
+    },
+    {
+        key: "4",
+        title: 'Do you sell luxury items?',
+        answer: 'No. We only sell fractions of a luxury asset that was divided programmatically in X tokens.',
+    },
+    {
+        key: "5",
+        title: 'Where do you keep assets tied to the tokens?',
+        answer: 'Assets are kept in bank safes. An independent custodian will publish Proof-of-Reserve each month.',
     },
 ]
 
@@ -42,7 +52,7 @@ export default function Ama() {
                                 {
                                     Questionlist.map((item) => (
                                         <Accordion.Item className={classes.item} value={item.key}>
-                                            <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
+                                            <Accordion.Control>{item.title}<span className={classes.blueDot}>?</span></Accordion.Control>
                                             <Accordion.Panel>{item.answer}</Accordion.Panel>
                                         </Accordion.Item>
                                     ))
