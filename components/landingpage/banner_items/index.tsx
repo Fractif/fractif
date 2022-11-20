@@ -13,52 +13,65 @@ import { IconTrendingUp } from '@tabler/icons'
 //import styles
 import { useStyles } from './index.style';
 
+//import all images
+import Rolex from '@public/itemBanner/Fractif_Banner_Rolex.png';
+import Hermes from '@public/itemBanner/Fractif_Banner_Hermes.png';
+import Ferrari from '@public/itemBanner/Fractif_Banner_Ferrari.png';
+import JaegerLeCoultre from '@public/itemBanner/Fractif_Banner_JaegerLeCoultre.png';
+import Porsche from '@public/itemBanner/Fractif_Banner_Porsche.png';
+import PatekPhilippe from '@public/itemBanner/Fractif_Banner_PatekPhilippe.png';
+import AudemarsPiguet from '@public/itemBanner/Fractif_Banner_AudemarsPiguet.png';
+import VanCleef from '@public/itemBanner/Fractif_Banner_VanCleef.png';
+import Macallan from '@public/itemBanner/Fractif_Banner_Macallan.png';
+
 const ListItem = [
     {
         title: "Rolex",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042476023335366746/test.png"
+        image: Rolex.src
     },
     {
         title: "Hermès",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469928432832642/png-transparent-chanel-hermxe8s-birkin-bag-handbag-black-women-s-bag-white-luggage-bags-black-hair-removebg-preview.png"
+        image:  Hermes.src
     },
     {
         title: "Ferrari",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042476939014852659/812-500x500.png"
+        image: Ferrari.src
     },
     {
         title: "Jaeger-leCoultre",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469930471272588/Jaeger-LeCoultre-ReversoTributeDuoface-3988482-222237-1-220816-141305-removebg-preview.png"
+        image: JaegerLeCoultre.src
     },
     {
-        title: "Porsche",
+        title: "Macallan",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469929074569316/png-transparent-porsche-918-spyder-porsche-carrera-gt-international-motor-show-germany-old-car-car-roadster-computer-wallpaper-removebg-preview.png"
+        image: Macallan.src
     },
     {
         title: "Patek Philippe",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469929837920266/kisspng-patek-philippe-co-automatic-watch-complication-incarnation-5b06bc17136245.0077177715271680230794-removebg-preview.png"
+        image: PatekPhilippe.src
     },
     {
         title: "Audemars Piguet",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042459447307546664/png-transparent-audemars-piguet-royal-oak-chronograph-watch-audemars-piguet-royal-oak-offshore-chronograph-watch-watch-accessory-bracelet-accessories-removebg-preview.png"
+        image: AudemarsPiguet.src
     },
     {
-        title: "Dior",
+        title: "Van Cleef & Arpels",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469929447854090/air-jordan-1-high-dior-625809_1200x-removebg-preview.png"
+        image: VanCleef.src
     },
+
     {
         title: "Porsche",
         trending_percent: "+12,35%",
-        image: "https://cdn.discordapp.com/attachments/751483695214362704/1042469929074569316/png-transparent-porsche-918-spyder-porsche-carrera-gt-international-motor-show-germany-old-car-car-roadster-computer-wallpaper-removebg-preview.png"
+        image: Porsche.src
     },
+ 
 ]
 
 function CardRendering({item} : {item: {title: string, trending_percent: string, image: string}}) {
@@ -72,7 +85,7 @@ function CardRendering({item} : {item: {title: string, trending_percent: string,
 
             <div className={classes.cardImage}>
                 <Image
-                    width={100}
+                    width={75}
                     height={75}
                     src={item.image}
                 />
