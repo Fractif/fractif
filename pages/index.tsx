@@ -9,6 +9,7 @@ import Roadmap from '@components/landingpage/roadmap';
 import Team from '@components/landingpage/team';
 import Ama from '@components/landingpage/ama';
 import BannerItems from '@components/landingpage/banner_items'
+import Demo from '@components/landingpage/demo'
 
 const useStyles = createStyles((theme) => ({
     background_effect: {
@@ -35,6 +36,7 @@ export default function LandingPage() {
             <BannerItems />
             <Discover />
             <Features />
+            <Demo />
             <BannerCTA />
             <Roadmap />
             <Team />
