@@ -1,0 +1,18 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/bundle-analyzer": "^13.0.3",
+    "@sentry/nextjs": "^7.19.0",
+    "graphql-helper": "^0.0.1",
+    "next-secure-headers": "^2.2.0",
+    "next-transpile-modules": "^10.0.0"
+  }
+}

@@ -19,31 +19,11 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
-    "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@typechain-types/*": [
-        "typechain-types/*"
-      ],
-      "@constants/*": [
-        "constants/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "paths": { }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

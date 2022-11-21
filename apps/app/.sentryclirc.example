@@ -1,0 +1,7 @@
+sentryclirc[defaults]
+url = https://sentry.io/
+org = <org slug>
+project = <project>
+
+[auth]
+token = <token>

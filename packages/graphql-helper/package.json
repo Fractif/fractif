@@ -1,0 +1,16 @@
+{
+  "name": "graphql-helper",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "graphql-hooks": "^6.0.4",
+    "graphql-hooks-memcache": "^3.0.0"
+  }
+}
