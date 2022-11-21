@@ -33,7 +33,7 @@ const ItemDemoList = [
     },
     {
         type: "bags",
-        item: "Hermès Birkin 35 handbag ",
+        item: "Hermès Birkin 35 handbag",
         asset: bag.src,
     },
     {
@@ -53,6 +53,9 @@ export default function Demo() {
     useEffect(() => {
         setItemData(ItemDemoList.find((item) => item.type === demoItem))
     }, [demoItem])
+
+    //TODO: Make demo live dynamic
+    //TODO: Fix Box ROI 
     return (
         <Container >
             <div className={classes.wrapper}>
