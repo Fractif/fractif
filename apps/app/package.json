@@ -12,6 +12,7 @@
     "@next/bundle-analyzer": "^13.0.3",
     "@sentry/nextjs": "^7.19.0",
     "graphql-helper": "^0.0.1",
+    "ky": "^0.32.2",
     "next-secure-headers": "^2.2.0",
     "next-transpile-modules": "^10.0.0"
   }
