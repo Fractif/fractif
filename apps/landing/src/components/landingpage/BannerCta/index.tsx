@@ -3,7 +3,7 @@ import {
     Title,
     Text,
 } from '@mantine/core';
-import PrimaryButton from '@components/buttons/primary';
+import PrimaryButton from '@components/Buttons/primary';
 import { useStyles } from './index.style';
 
 export default function BannerCTA() {

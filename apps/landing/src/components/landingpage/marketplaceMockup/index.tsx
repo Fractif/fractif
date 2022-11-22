@@ -1,6 +1,6 @@
 import { createStyles, Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
 import image from '/public/faq.svg';
-import DiscordButton from '@components/buttons/discord';
+import DiscordButton from '@components/Buttons/discord';
 import { useStyles } from './index.style';
 
 const Questionlist = [

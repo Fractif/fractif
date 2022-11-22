@@ -71,7 +71,6 @@ const ListItem = [
         trending_percent: "+12,35%",
         image: Porsche.src
     },
- 
 ]
 
 function CardRendering({item} : {item: {title: string, trending_percent: string, image: string}}) {

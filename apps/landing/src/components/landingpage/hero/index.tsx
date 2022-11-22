@@ -13,8 +13,8 @@ import {
 import { useStyles } from './index.style';
 
 //Components
-import PrimaryButton from '@components/buttons/primary';
-import SecondaryButton from '@components/buttons/secondary';
+import PrimaryButton from '@components/Buttons/primary';
+import SecondaryButton from '@components/Buttons/secondary';
 
 export default function Hero() {
     const { classes } = useStyles();
