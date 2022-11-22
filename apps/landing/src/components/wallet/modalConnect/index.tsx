@@ -43,7 +43,7 @@ export default function SelectWalletModal() {
                         {account ? account.slice(0, 6) + "..." + account.slice(account.length - 4, account.length) : "Connect"}
                     </Text>
                     :
-                    "Connect Wallet"
+                    "Connect App"
                 }
             </Button>
         </>

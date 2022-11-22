@@ -2,10 +2,10 @@
 import { MantineProvider } from '@mantine/core';
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
-
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
+//Components
 import Navbar from '@components/navbar';
 import Footer from '@components/footer';
 
@@ -43,6 +43,18 @@ export default function App(props: AppProps) {
               "#05429e",
               "#033073"
             ],
+            sucess: [
+              "#edfbf3",
+              "#b4edcc",
+              "#6bdb9b",
+              "#2bbd69",
+              "#26a95e",
+              "#208f4f",
+              "#1b7943",
+              "#166136",
+              "#12522d",
+              "#0d3b21"
+            ],
           },
           breakpoints: {
             xs: 0,
@@ -77,4 +89,3 @@ export default function App(props: AppProps) {
     </>
   );
 }
-

@@ -18,19 +18,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "@components/*": [
-        "src/components/*"
+        "components/*"
       ],
       "@public/*": [
-        "public/*"
-      ],
-      "@typechain-types/*": [
-        "typechain-types/*"
+        "../public/*"
       ],
       "@constants/*": [
-        "src/constants/*"
+        "constants/*"
       ]
     },
     "plugins": [

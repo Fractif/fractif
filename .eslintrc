@@ -1,0 +1,27 @@
+{
+  "root": true,
+  "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "plugins": [
+      "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/strict-boolean-expressions": [
+      "warn",
+      {
+	"allowString": true,
+	"allowNumber": true,
+	"allowNullableObject": true,
+	"allowNullableBoolean": true,
+	"allowNullableNumber": false,
+	"allowNullableString": true,
+	"allowAny": false
+      }
+    ],
+  },
+  "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
+}

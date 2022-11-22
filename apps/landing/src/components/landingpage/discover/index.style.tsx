@@ -46,7 +46,7 @@ export const useStyles = createStyles((theme) => ({
         },
     },
     button:{
-        paddingTop: theme.spacing.xl * 2,
+        paddingTop: theme.spacing.xl,
         [theme.fn.smallerThan('md')]: {
             paddingTop: theme.spacing.xl,
         },

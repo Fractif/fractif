@@ -22,9 +22,7 @@ export default function BannerCTA() {
 
                         <div className={classes.description}>
                             <Text color="dimmed" mt="md" className={classes.subtitle}>
-                                We carefully select luxury objects by analyzing their trend curves and collecting all purchase and sales data of the last years.
-                                <br />
-                                Find out which objects are most interesting for your investment objectives and the risk you are willing to take.
+                            Have access to incredible objects that you would not have had access to without Fractif.
                             </Text>
                             <div className={classes.button}>
                                 <PrimaryButton title={"Discover"} />
