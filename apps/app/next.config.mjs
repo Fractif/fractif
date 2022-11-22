@@ -15,14 +15,7 @@ const workspaceRoot = path.resolve(
     '..',
     '..'
 );
-/**
- * Once supported replace by node / eslint / ts and out of experimental, replace by
- * `import packageJson from './package.json' assert { type: 'json' };`
- * @type {import('type-fest').PackageJson}
- */
-const packageJson = JSON.parse(
-    readFileSync(new URL('./package.json', import.meta.url)).toString('utf-8')
-);
+import packageJson from './package.json' assert { type: 'json' };
 
 const trueEnv = ['true', '1', 'yes'];
 

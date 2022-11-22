@@ -12,5 +12,8 @@
     "dotenv": "^16.0.3",
     "graphql-hooks": "^6.0.4",
     "graphql-hooks-memcache": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25"
   }
 }

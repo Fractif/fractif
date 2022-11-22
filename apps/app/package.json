@@ -13,14 +13,18 @@
     "@sentry/nextjs": "^7.19.0",
     "graphql-helper": "^0.0.1",
     "ky": "^0.32.2",
+    "next": "^13.0.4",
     "next-secure-headers": "^2.2.0",
-    "next-transpile-modules": "^10.0.0"
+    "next-transpile-modules": "^10.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "eslint": "^8.28.0",
+    "eslint-config-next": "^13.0.4",
     "typescript": "^4.9.3"
   }
 }
