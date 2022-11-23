@@ -31,6 +31,7 @@ const Questionlist = [
     },
 ]
 
+
 export default function Ama() {
     const { classes } = useStyles();
     return (
