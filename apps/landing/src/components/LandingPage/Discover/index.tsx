@@ -6,7 +6,7 @@ import {
     Text,
 } from '@mantine/core';
 import ImageDiscover from '@public/discover-image.png';
-import PrimaryButton from '@components/buttons/primary';
+import PrimaryButton from '@components/Buttons/primary';
 import { useStyles } from './index.style';
 
 export default function Discover() {

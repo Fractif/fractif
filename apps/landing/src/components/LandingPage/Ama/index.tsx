@@ -1,6 +1,6 @@
 import { Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
 import image from '/public/faq.svg';
-import DiscordButton from '@components/buttons/discord';
+import DiscordButton from '@components/Buttons/discord';
 import { useStyles } from './index.style';
 
 const Questionlist = [
@@ -30,6 +30,7 @@ const Questionlist = [
         answer: 'Assets are kept in bank safes. An independent custodian will publish Proof-of-Reserve each month.',
     },
 ]
+
 
 export default function Ama() {
     const { classes } = useStyles();
