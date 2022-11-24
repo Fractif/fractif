@@ -31,7 +31,10 @@
     "./apps/blog",
     "./apps/landing",
     "./packages/graphql-helper",
-    "./packages/utils",
-    "./packages/fractif-ui"
-  ]
+    ".packages/fractif-ui"
+  ],
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  }
 }
