@@ -81,3 +81,9 @@ In vscode, `settings.json`:
     }
 ]
 ```
+
+## DISCLAIMER
+This project is still in early development
+
+## Licence
+Fractif is under the [Business Source License 1.1](./LICENCE)
