@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Modal, Button, Group, Title, Container, Text, createStyles, Input, } from '@mantine/core';
+import { Modal, Button, Group, Title, Container, Text, Input, } from '@mantine/core';
 import { IconMail, IconCheck } from '@tabler/icons';
 import { useStyles } from './index.style';
 
 export default function NewsletterPopUp() {
-    const { classes, theme } = useStyles();
+    const { classes } = useStyles();
     const [opened, setOpened] = useState(false);
 
     const NewsletterPopUp = {
