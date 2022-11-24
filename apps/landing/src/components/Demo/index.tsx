@@ -23,36 +23,56 @@ import car from '@public/demo/car.png';
 //import icons
 import { IconArrowNarrowUp } from '@tabler/icons';
 
-const ItemDemoList = [
+type Item = {
+    type: string;
+    item: string;
+    asset: string;
+    roi: number;
+};
+
+
+const ItemDemoList: Item[] = [
     {
         type: "watches",
         item: "Rolex GMT-Master II Pepsi",
         asset: watch.src,
+        roi: 23.06,
     },
     {
         type: "bags",
         item: "Hermès Birkin 35 handbag",
         asset: bag.src,
+        roi: 15.62,
     },
     {
         type: "cars",
         item: "Porsche 911 Touring Pack",
         asset: car.src,
+        roi: 8.75,
     },
 
 ]
+const beautifyPrice = (price: number) => {
+    return price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
 
+function calculateEstimatedCashout(item: Item, price: number) {
+    const estimatedCashout = (item.roi / 100) * price;
+    const fullCashout = estimatedCashout + price;
+    return beautifyPrice(fullCashout);
+}
 
 export default function Demo() {
     const { classes, theme } = useStyles();
     const { width } = useViewportSize();
     const [demoItem, setDemoItem] = useState("watches");
-    const [itemData, setItemData] = useState(ItemDemoList.find((item) => item.type === demoItem));
+    const [investAmount, setInvestAmount] = useState(50);
+    const [itemData, setItemData] = useState<Item>(ItemDemoList.find((item) => item.type === demoItem) as Item);
+
     useEffect(() => {
-        setItemData(ItemDemoList.find((item) => item.type === demoItem))
+        setItemData(ItemDemoList.find((item) => item.type === demoItem) as Item)
     }, [demoItem])
 
-    //TODO: Make demo live dynamic
     //TODO: Fix Box ROI 
     return (
         <Container >
@@ -97,6 +117,7 @@ export default function Demo() {
                             <Slider
                                 pt={10}
                                 label={(value) => `$${value}`}
+                                onChange={(value) => setInvestAmount(value)}
                                 defaultValue={5000}
                                 step={1}
                                 min={50}
@@ -110,12 +131,13 @@ export default function Demo() {
                                     ROI from 2021 to 2022
                                 </Text>
                                 <Box className={classes.roiCard}>
-                                    32,68%
+                                    {itemData?.roi}%
                                 </Box>
                                 <div className={classes.roiDollars}>
                                     <IconArrowNarrowUp size={22} stroke={1.5} />
                                     <Text >
-                                        $12,472
+
+                                        ${calculateEstimatedCashout(itemData, investAmount)}
                                     </Text>
                                 </div>
                             </div>
