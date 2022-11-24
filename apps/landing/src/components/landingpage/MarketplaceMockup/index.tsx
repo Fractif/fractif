@@ -1,6 +1,6 @@
 import { createStyles, Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
 import image from '/public/faq.svg';
-import DiscordButton from '@components/Buttons/discord';
+import { DiscordButton } from 'fractif-ui';
 import { useStyles } from './index.style';
 
 const Questionlist = [
@@ -34,14 +34,14 @@ export default function Ama() {
                             {
                                 Questionlist.map((item) => (
                                     <Accordion.Item className={classes.item} value={item.key}>
-                                    <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
-                                    <Accordion.Panel>{item.answer}</Accordion.Panel>
-                                </Accordion.Item>
+                                        <Accordion.Control>{item.title} <span className={classes.blueDot}>?</span></Accordion.Control>
+                                        <Accordion.Panel>{item.answer}</Accordion.Panel>
+                                    </Accordion.Item>
                                 ))
                             }
                         </Accordion>
                         <div className={classes.ctaDiscord}>
-                            <DiscordButton/>
+                            <DiscordButton />
                         </div>
                     </Col>
                 </Grid>

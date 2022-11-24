@@ -1,15 +1,15 @@
 import { BackgroundImage, createStyles } from '@mantine/core';
 
 //Import landing page components
-import Hero from '@components/landingpage/hero'
-import Features from '@components/landingpage/features'
-import Discover from '@components/landingpage/discover'
-import BannerCTA from '@components/landingpage/banner_cta';
-import Roadmap from '@components/landingpage/roadmap';
-import Team from '@components/landingpage/team';
-import Ama from '@components/landingpage/ama';
-import BannerItems from '@components/landingpage/banner_items'
-import Demo from '@components/landingpage/demo'
+import Hero from '@components/landingpage/Hero'
+import Features from '@components/landingpage/Features'
+import Discover from '@components/landingpage/Discover'
+import BannerCTA from '@components/landingpage/BannerCta';
+import Roadmap from '@components/landingpage/Roadmap';
+import Team from '@components/landingpage/Team';
+import Ama from '@components/landingpage/Ama';
+import BannerItems from '@components/landingpage/BannerItems'
+import Demo from '@components/landingpage/Demo'
 
 const useStyles = createStyles((theme) => ({
     background_effect: {

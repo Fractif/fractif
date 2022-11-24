@@ -6,7 +6,7 @@ import {
     Text,
 } from '@mantine/core';
 import ImageDiscover from '@public/discover-image.png';
-import PrimaryButton from '@components/Buttons/primary';
+import { PrimaryButton } from 'fractif-ui';
 import { useStyles } from './index.style';
 
 export default function Discover() {
@@ -24,12 +24,12 @@ export default function Discover() {
 
                         <Text color="dimmed" mt="md">
 
-                            Diversifying your portfolio haven’t been more essential than today. 
-                            <br/>
-                            It turns out that luxury assets have proven to be really good investments for quite a few years and the tendency seems to continue. 
+                            Diversifying your portfolio haven’t been more essential than today.
+                            <br />
+                            It turns out that luxury assets have proven to be really good investments for quite a few years and the tendency seems to continue.
                         </Text>
                         <div className={classes.button}>
-                        <PrimaryButton title={"Sign Up now"} />
+                            <PrimaryButton title={"Sign Up now"} />
                         </div>
 
                     </div>
