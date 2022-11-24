@@ -31,6 +31,7 @@
     "./apps/blog",
     "./apps/landing",
     "./packages/graphql-helper",
-    "./packages/utils"
+    "./packages/utils",
+    "./packages/fractif-ui"
   ]
 }
