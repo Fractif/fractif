@@ -20,6 +20,15 @@ const useStyles = createStyles(() => ({
         width: "30%", 
         height: '100%'
     },
+    inner: {
+        '-webkit-touch-callout': 'none',
+        '-webkit-user-select': 'none',
+        '-khtml-user-select': 'none',
+        '-moz-user-select': 'none',
+        '-ms-user-select': 'none',
+        'user-select': 'none',
+
+    }
 }));
 
 
@@ -27,7 +36,7 @@ export default function LandingPage() {
     const { classes } = useStyles();
 
     return (
-        <>
+        <div className={classes.inner}>
             <BackgroundImage
                 src="/landing_effect.svg"
                 className={classes.background_effect}
@@ -42,6 +51,6 @@ export default function LandingPage() {
             <Team />
             <Ama />
 
-        </>
+        </div>
     )
 }
