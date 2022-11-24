@@ -15,4 +15,11 @@ export const useStyles = createStyles((theme) => ({
             display: 'none',
         },
     },
+    logo:{
+        fontSize: 32,
+        fontWeight: 700,
+    },
+    blueDot: {
+        color: theme.colors.brand[4]
+    },
 }));

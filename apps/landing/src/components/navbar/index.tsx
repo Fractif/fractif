@@ -6,7 +6,8 @@ import {
     Burger,
     Drawer,
     ScrollArea,
-    Container
+    Container,
+    Text
 } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useDisclosure } from '@mantine/hooks';
@@ -24,7 +25,9 @@ export default function Navbar() {
         <Container pb={0}>
             <Header height={60} px="md" className={classes.header}>
                 <Group position="apart" sx={{ height: '100%' }}>
-                    Logo
+                    <Text className={classes.logo}>
+                        Fractif<span className={classes.blueDot}>.</span>
+                    </Text>
                     {
                         width > theme.breakpoints.sm ?
                             <Group>
