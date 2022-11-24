@@ -1,7 +1,7 @@
 import { Button, Stack } from '@mantine/core';
 import { useWeb3React } from "@web3-react/core";
 import { MetamaskIcon, WalletConnectIcon, CoinbaseWalletIcon } from '@components/icons'
-import { connectors } from "@components/wallet/config";
+import { connectors } from "@components/wallet/Config";
 
 const providers = [
     { name: 'Metamask', connectorWallet: connectors.injected, provider: "injected", icon: <MetamaskIcon width={25} height={25} /> },

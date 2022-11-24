@@ -10,8 +10,9 @@ import {
 } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useDisclosure } from '@mantine/hooks';
-import SelectWalletModal from '@components/wallet/modalConnect';
+import SelectWalletModal from '@components/wallet/ModalConnect';
 import { useStyles } from './index.style';
+
 
 
 export default function Navbar() {

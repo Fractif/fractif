@@ -7,10 +7,10 @@ import Head from 'next/head';
 
 //Fractif-ui 
 import {FractifUiTheme} from "fractif-ui"
-import { DiscordButton } from 'fractif-ui';
+
 //Components
-import Navbar from '@components/Navbar/index';
-import Footer from '@components/Footer/index';
+import Navbar from '@components/navbar/index';
+import Footer from '@components/footer/index';
 
 
 import { createStyles } from '@mantine/core';

@@ -4,8 +4,8 @@ import { useWeb3React } from "@web3-react/core";
 import { IconAppWindow } from '@tabler/icons';
 
 //Wallet components
-import WalletConnectButtonGroup from '@components/wallet/walletConnectButtonGroup';
-import WalletWarningTab from '@components/wallet/walletWarningTab';
+import WalletConnectButtonGroup from '@components/wallet/WalletConnectButtonGroup';
+import WalletWarningTab from '@components/wallet/WalletWarningTab';
 
 export default function SelectWalletModal() {
     const [opened, setOpened] = useState(false);

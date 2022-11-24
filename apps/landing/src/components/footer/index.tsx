@@ -1,4 +1,4 @@
-import { createStyles, Text, Container, ActionIcon, Group, Image, Input, Title } from '@mantine/core';
+import { Text, Container, ActionIcon, Group, Image, Input, Title } from '@mantine/core';
 import { IconBrandTwitter, IconBrandDiscord, IconMail, IconArrowNarrowRight } from '@tabler/icons';
 import { TERM_AND_SERVICES_URL, PRIVACY_POLICY_URL, DISCORD_URL, TWITTER_URL, OPENSEA_URL } from '@constants/index';
 import { OpenseaIcon } from '@components/icons';
