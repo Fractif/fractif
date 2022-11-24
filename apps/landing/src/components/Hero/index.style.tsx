@@ -5,6 +5,7 @@ export const useStyles = createStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 40,
     },
 
     content: {
