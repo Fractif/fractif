@@ -84,7 +84,6 @@ export const useStyles = createStyles((theme) => ({
         alignContent:"center",
         justifyContent:"center",
         paddingTop: "60px",
-        gap: "10px",
     },
     subtitle:{
         textAlign:"center",
@@ -98,22 +97,30 @@ export const useStyles = createStyles((theme) => ({
         color:theme.colors.gray[6],
     },
     roiCard:{
-        backgroundColor:theme.colors.brand[4],
-        color:"white",
-        borderRadius: "10px",
-        textAlign: "center",
-        fontSize:'30px',
-        [theme.fn.smallerThan('md')]: {
-            fontSize: "20px",
-        },
-    },
-    roiDollars:{
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        color: theme.colors.sucess[2],
-        gap:5,
-        paddingTop: 10,
+        alignContent: "center",
+        gap: "10px",
+        color:theme.colors.brand[4],
+        fontWeight: 700,
+    },
+    estimatedCashoutPercent:{
+        display: "flex",
+        justifyContent: "end",
+        alignContent: "end",
+
+    },
+
+    roiDollars:{
+        width: "fit-content",
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center",
+        justifySelf: "center",
+        alignSelf: "center",
+        backgroundColor: theme.colors.sucess[2],
+        color:"white",
         [theme.fn.smallerThan('md')]: {
             fontSize: "14px",
         },
@@ -124,10 +131,17 @@ export const useStyles = createStyles((theme) => ({
         [theme.fn.smallerThan('md')]: {
             width: "80%",
         },
+
     },
     CardTitle:{
         [theme.fn.smallerThan('md')]: {
             fontSize: "28px",
         },
-    }
+    },
+    roiPart1:{
+        fontSize:52,
+    },
+    roiPart2:{
+        fontSize:32,
+    },
 }));

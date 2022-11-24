@@ -34,12 +34,14 @@ export default function Footer() {
                     <ActionIcon size="lg" className={classes.newsletterButton}>
                         <IconArrowNarrowRight size={18} stroke={1.5} />
                     </ActionIcon>
-            </div>
+                </div>
             </Container>
 
             <Container className={classes.inner} p={0}>
                 <div className={classes.footerHeader}>
-                    <Image src="/fractif.png" alt="Fractif Logo" />
+                    <Text className={classes.logo}>
+                        Fractif<span className={classes.blueDot}>.</span>
+                    </Text>
                     <div className={classes.footerLinks}>
                         <a href={PRIVACY_POLICY_URL} className={classes.links}>
                             Privacy Policy

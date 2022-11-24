@@ -5,15 +5,23 @@ export const useStyles = createStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 40,
     },
 
     content: {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "left",
-        alignItems: "left",
+        justifyContent: "center",
+        alignItems: "center",
+        width:"75%",
+        textAlign: "center",
+
+        [theme.fn.largerThan('lg')]: {
+            width: "55%",
+        },
 
         [theme.fn.smallerThan('md')]: {
+            width: "100%",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
@@ -23,7 +31,7 @@ export const useStyles = createStyles((theme) => ({
     groupButton: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "left",
+        justifyContent: "center",
         width: "100%",
 
         [theme.fn.smallerThan('sm')]: {
@@ -31,7 +39,7 @@ export const useStyles = createStyles((theme) => ({
             alignContent: "center",
         },
         [theme.fn.smallerThan('lg')]: {
-            justifyContent: "left",
+            justifyContent: "center",
         },
     },
 
