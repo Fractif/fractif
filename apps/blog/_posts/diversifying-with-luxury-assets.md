@@ -28,11 +28,16 @@ Despite all of this, consumerism is still alive and well, and luxury brands have
 
 "The momentum for the key markets in North America, Europe and Japan is growing, while China was very advantageous until the end of February," RBC consultants said earlier this month.
 
-
 ## Demand for luxury assets is growing
 "Today the entire world buys luxury products and that is continuing with an even younger clientele, which is an advantage in this sector," Arnaud Cadart, a portfolio manager for Flornoy.
 
 As economic disparities increase and younger clientele is targeted, we are witnessing a surge in demand for luxury assets. The market is expected to keep growing with a steady rise of 21 percent to finally reach $1.45 Trillion at the end of 2022. All of the luxury categories have now outperformed or recovered to their 2019 levels.
+
+## Winning in the long run
+
+The luxury market is a very resilient one, and has proven to be a good investment in the long run. The pandemic has been a good test for the industry, and it has proven capable of reinvention to emerge even stronger than before. 
+
+"We could be affected in the short term, but we're not worried on the long term," said Jean-Jacques Guiony, LVMH's financial director.
 
 ## Sources
 - [Luxury Sales Could Reach $1.45 Trillion This Year, as Market Returns to Pre-Covid Levels, *TFL*](https://www.thefashionlaw.com/luxury-market-sales-could-rise-to-1-45-trillion-as-categories-return-to-pre-covid-levels/)
