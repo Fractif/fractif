@@ -30,7 +30,6 @@ export default function Hero() {
                             <PrimaryButton title={"Invest"} />
                         </Group>
                     </div>
-                    <Image src="/hero.png" className={classes.image} />
                 </div>
             </Container>
         </div>
