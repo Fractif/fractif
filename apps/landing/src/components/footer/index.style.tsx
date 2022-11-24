@@ -11,6 +11,9 @@ export const useStyles = createStyles((theme) => ({
     },
 
     footerHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
         maxWidth: "100%",
         width: "100%",
         [theme.fn.smallerThan('sm')]: {
@@ -116,5 +119,8 @@ export const useStyles = createStyles((theme) => ({
     newsletterTitle :{
         marginBottom: 20,
     },
-
+    logo:{
+        fontSize: 32,
+        fontWeight: 700,
+    },
 }));
