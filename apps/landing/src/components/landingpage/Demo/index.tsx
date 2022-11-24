@@ -3,8 +3,6 @@ import {
     Container,
     Image,
     Text,
-    Card,
-    SimpleGrid,
     Group,
     Title,
     Slider,

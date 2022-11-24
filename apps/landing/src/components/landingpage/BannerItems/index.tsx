@@ -1,10 +1,8 @@
 import {
-    createStyles,
     Image,
     Text,
     Card,
     SimpleGrid,
-    Center
 } from '@mantine/core';
 
 //import icon trending-up

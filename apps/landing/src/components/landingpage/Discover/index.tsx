@@ -1,5 +1,4 @@
 import {
-    createStyles,
     Image,
     Container,
     Title,

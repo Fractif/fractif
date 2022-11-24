@@ -1,4 +1,4 @@
-import { createStyles, Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
+import { Image, Accordion, Grid, Col, Container } from '@mantine/core';
 import image from '/public/faq.svg';
 import { DiscordButton } from 'fractif-ui';
 import { useStyles } from './index.style';

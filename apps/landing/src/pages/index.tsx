@@ -11,7 +11,7 @@ import Ama from '@components/landingpage/Ama';
 import BannerItems from '@components/landingpage/BannerItems'
 import Demo from '@components/landingpage/Demo'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
     background_effect: {
         position: 'absolute', 
         top: 0, 

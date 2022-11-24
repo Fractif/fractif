@@ -12,9 +12,6 @@ import {FractifUiTheme} from "fractif-ui"
 import Navbar from '@components/navbar/index';
 import Footer from '@components/footer/index';
 
-
-import { createStyles } from '@mantine/core';
-
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
   const getLibrary = (provider: ethers.providers.ExternalProvider | ethers.providers.JsonRpcFetchFunc) => {

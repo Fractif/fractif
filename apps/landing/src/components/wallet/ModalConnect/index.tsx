@@ -20,7 +20,7 @@ export default function SelectWalletModal() {
                 overlayOpacity={0.55}
                 overlayBlur={0.3}
                 size="md"
-                sx={(theme) => ({
+                sx={() => ({
                     fontWeight: 600,
                     fontSize: 16,
                 })}
