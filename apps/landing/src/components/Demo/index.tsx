@@ -143,6 +143,16 @@ export default function Demo() {
                                 <Text className={classes.subtitle}>
                                     ROI from 2021 to 2022
                                 </Text>
+                                <Box className={classes.roiCard}>
+                                    {itemData?.roi}%
+                                </Box>
+                                <div className={classes.roiDollars}>
+                                    <IconArrowNarrowUp size={22} stroke={1.5} />
+                                    <Text >
+
+                                        ${calculateEstimatedCashout(itemData, investAmount)}
+                                    </Text>
+                                </div>
                             </div>
                         </div>
                     </div>
