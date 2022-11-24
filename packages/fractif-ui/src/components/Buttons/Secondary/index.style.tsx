@@ -3,7 +3,7 @@ import {
 } from '@mantine/core';
 import {FractifUiTheme} from '../../../theme';
 
-export const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles((theme ) => ({
     secondary: {
         borderRadius: 5,
         borderColor: FractifUiTheme.colors.brand[4],

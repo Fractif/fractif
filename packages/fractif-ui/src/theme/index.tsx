@@ -1,6 +1,5 @@
-import { MantineThemeOverride } from "@mantine/core";
-
-export const FractifUiTheme : MantineThemeOverride = {
+//TODO: fix error import FractifUiTheme (Should be type MantineThemeOverride)
+export const FractifUiTheme  = {
     /** Put your mantine theme override here */
     colorScheme: 'light',
     colors: {

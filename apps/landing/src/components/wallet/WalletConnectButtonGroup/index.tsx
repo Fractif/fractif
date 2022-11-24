@@ -9,13 +9,12 @@ const providers = [
     { name: 'Coinbase Connect', connectorWallet: connectors.coinbaseWallet, provider: "walletConnect", icon: <CoinbaseWalletIcon width={25} height={25} /> },
 ]
 
+function setProvider(type: any){
+    window.localStorage.setItem("provider", type);
+}
+
 export default function WalletConnectButtonGroup() {
     const { activate } = useWeb3React();
-
-    function setProvider(type: any){
-        window.localStorage.setItem("provider", type);
-    };
-
     return (
         <>
             <Stack>

@@ -6,7 +6,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 //Fractif-ui 
-import {FractifUiTheme} from "fractif-ui"
+import { FractifUiTheme } from "fractif-ui"
 
 //Components
 import Navbar from '@components/navbar/index';
@@ -29,6 +29,9 @@ export default function App(props: AppProps) {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
+        //TODO: find fix for FractifUiTheme
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         theme={FractifUiTheme}
       >
         <Web3ReactProvider getLibrary={getLibrary}>

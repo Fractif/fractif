@@ -1,7 +1,8 @@
 import {
     createStyles,
 } from '@mantine/core';
-import {FractifUiTheme} from '../../../theme';
+import { FractifUiTheme } from '../../../theme';
+
 
 export const useStyles = createStyles((theme) => ({
     primary: {

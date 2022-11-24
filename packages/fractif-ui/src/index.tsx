@@ -1,2 +1,2 @@
-export { FractifUiTheme } from "./theme"
+export { FractifUiTheme }  from "./theme"
 export * from "./components"
