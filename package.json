@@ -32,5 +32,9 @@
     "./apps/landing",
     "./packages/graphql-helper",
     "./packages/utils"
-  ]
+  ],
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  }
 }
