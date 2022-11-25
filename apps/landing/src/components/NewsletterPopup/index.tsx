@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Modal, Button, Group, Title, Container, Text, Input } from '@mantine/core';
-import { IconMail, IconCheck } from '@tabler/icons';
+import { IconError404, IconCheck, IconMail } from '@tabler/icons';
 import { useStyles } from './index.style';
 import { useForm } from "react-hook-form";
 import { showNotification } from '@mantine/notifications';
@@ -51,7 +51,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
                     title: 'Error',
                     message: 'Something went wrong',
                     color: 'red',
-                    icon: <IconCheck />,
+                    icon: <IconError404 />,
                     autoClose: true,
             })
         }
@@ -62,7 +62,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
                 title: 'Error',
                 message: 'Something went wrong',
                 color: 'red',
-                icon: <IconCheck />,
+                icon: <IconError404 />,
             });
         }
     }
