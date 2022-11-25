@@ -26,6 +26,9 @@ Chinese consumers accounted for 30% of all luxury sales in 2018, according to Ba
 
 As economic disparities increase and younger clientele is targeted, we are witnessing a surge in demand for luxury assets. The market is expected to keep growing with a steady rise of 21 percent to finally reach $1.45 Trillion at the end of 2022. All of the luxury categories have now outperformed or recovered to their 2019 levels.
 
+[2019 Global Wealth Report](https://www.knightfrank.com/wealthreport/) from Knight Frank shows that luxury assets have been on a steady rise in value over the last 10 years. Bottles of rare whisky had the highest growth rate, with a 582% increase in value over the last 10 years. Higher than traditional investments such as stocks and bonds. Vintage cars and watches also had a very good performance, with a 258% and 73% increase in value respectively.
+![Luxury assets are soaring in value](/assets/blog/luxury-assets/assets-soaring.jpg)
+
 ## Winning in the long run
 
 The luxury market is a very resilient one, and has proven to be a good investment in the long run. The pandemic has been a good test for the industry, and it has proven capable of reinvention to emerge even stronger than before. It just seems like these assets are recession-proof.
