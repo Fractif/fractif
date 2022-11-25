@@ -11,14 +11,6 @@ ogImage:
 tags: ['luxury', 'diversification', 'portfolio']
 ---
 
-
-- pre pandemic levels reached back
-- impressive with economic and geopolitical context
-  - Covid impact on key markets still important
-- enhancing digital engagement
-- consumers have been more careful with their spending, not buying cheaper but the best they can afford
-
-
 ## Brands reaching all time highs despite the pandemic, the economic crisis and conflicts
 While some industries struggle a lot recently (EXAMPLE), luxury worldwide groups have published quite good results this year, Hermes and LVMH leading the way with an improvement of respectively 33% and 29% compared to 2021. Over the recent years, luxury brands and their assets have proven to be a safe reserve of investment and have even outpace traditionnal investments indexes lately. An impressive performance considering that a lot of their key markets are still recovering from the pandemic and some are in prey of geopolitical conflict. China, the biggest market for luxury goods, is still battling the pandemic and hasn't reached pre pandemic levels yet in terms of tourism and consumption. In Europe, the conflict between Russia and Ukraine is still ongoing and weighs on the European economy. 
 
@@ -42,3 +34,4 @@ The luxury market is a very resilient one, and has proven to be a good investmen
 ## Sources
 - [Luxury Sales Could Reach $1.45 Trillion This Year, as Market Returns to Pre-Covid Levels, *TFL*](https://www.thefashionlaw.com/luxury-market-sales-could-rise-to-1-45-trillion-as-categories-return-to-pre-covid-levels/)
 - [Luxury goods market on a high, despite conflict, pandemic](https://www.rfi.fr/en/business/20220424-luxury-goods-market-on-a-high-despite-conflict-pandemic)
+- [Coronavirus Pandemic Continues to Challenge the Luxury Goods Industry](https://www.euromonitor.com/article/coronavirus-pandemic-continues-to-challenge-the-luxury-goods-industry)
