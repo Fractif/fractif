@@ -16,15 +16,18 @@ export default async function handler(
 		apiKey: process.env.NEXT_PUBLIC_API_KEY,
 		server: process.env.NEXT_PUBLIC_DATACENTER,
 	});
-
-	try {
-		await mailchimp.lists.addListMember("acf1d97c25", {
-			email_address,
-			status,
-			tags: ["newsletter"],
-		});
-	} catch (err : any) {
-		return res.status(400).send(err);
+	if (process.env.NEXT_PUBLIC_AUDIENCE_ID){
+		try {
+			await mailchimp.lists.addListMember(process.env.NEXT_PUBLIC_AUDIENCE_ID.toString(), {
+				email_address,
+				status,
+				tags: ["newsletter"],
+			});
+		} catch (err : any) {
+			return res.status(400).send(err);
+		}
+		res.status(200).json({ email_address, status });
+	} else {
+		return res.status(400);
 	}
-	res.status(200).json({ email_address, status });
 }
