@@ -24,17 +24,16 @@ const SocialList = [
     },
 ];
 
-type Inputs = {
+type InputNewsletter = {
     email: string,
 };
 
 export default function Footer() {
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors } } = useForm<InputNewsletter>();
     const { classes } = useStyles();
 
-    async function onSubmit(data: Inputs) {
+    async function onSubmit(data: InputNewsletter) {
         try {
-
             const res = await fetch('/api/mailchimp', {
                 method: 'POST',
                 headers: {
@@ -65,7 +64,6 @@ export default function Footer() {
             }
 
         } catch (error) {
-            console.log(error)
             showNotification({
                 title: 'Error',
                 message: 'Something went wrong',

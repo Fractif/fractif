@@ -5,12 +5,12 @@ import { useStyles } from './index.style';
 import { useForm } from "react-hook-form";
 import { showNotification } from '@mantine/notifications';
 
-type Inputs = {
+type InputNewsletter = {
     email: string,
 };
 
 export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean, setOpened: Dispatch<SetStateAction<boolean>> }) {
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors } } = useForm<InputNewsletter>();
     const { classes } = useStyles();
 
     const NewsletterPopUp = {
@@ -23,7 +23,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
         ]
     }
 
-    async function onSubmit(data: Inputs) {
+    async function onSubmit(data: InputNewsletter) {
         try {
 
             const res = await fetch('/api/mailchimp', {
@@ -55,9 +55,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
                     autoClose: true,
             })
         }
-
-        } catch (error) {
-            console.log(error)
+        } catch (error) { 
             showNotification({
                 title: 'Error',
                 message: 'Something went wrong',
