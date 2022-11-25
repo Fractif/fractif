@@ -1,14 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mailchimp from "@mailchimp/mailchimp_marketing";
 
-type Data = {
-	email_address: string;
-	status: string;
-};
-
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Data>
+	res: NextApiResponse
 ) {
 	const { email_address, status } = req.body;
 
@@ -23,11 +18,11 @@ export default async function handler(
 				status,
 				tags: ["newsletter"],
 			});
-		} catch (err : any) {
-			return res.status(400).send(err);
+		} catch (err) {
+			return res.status(400).send("Mailchimp error.")
 		}
 		res.status(200).json({ email_address, status });
 	} else {
-		return res.status(400);
+		return res.status(400).send("Error parsing mailchimp audience id.");
 	}
 }

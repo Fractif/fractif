@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Modal, Button, Group, Title, Container, Text, Input } from '@mantine/core';
-import { IconError404, IconCheck, IconMail } from '@tabler/icons';
+import { IconAlertCircle, IconCheck, IconMail } from '@tabler/icons';
 import { useStyles } from './index.style';
 import { useForm } from "react-hook-form";
 import { showNotification } from '@mantine/notifications';
@@ -9,12 +9,16 @@ type InputNewsletter = {
     email: string,
 };
 
-export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean, setOpened: Dispatch<SetStateAction<boolean>> }) {
+type INewsletterPopup ={
+    opened: boolean, 
+    setOpened: Dispatch<SetStateAction<boolean>>
+}
+export default function NewsletterPopUp({ opened, setOpened }: INewsletterPopup) {
     const { register, handleSubmit, formState: { errors } } = useForm<InputNewsletter>();
     const { classes } = useStyles();
 
     const NewsletterPopUp = {
-        title: 'Join 1,298 investors getting 1 articles every weeks',
+        title: 'Join more than 1,298 investors getting 1 articles every weeks',
         bulletPoints: [
             "Luxury investment analysis",
             "2 mins to read",
@@ -40,7 +44,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
             if (res.status === 200) {
                 showNotification({
                     title: 'Sucessfully subscribed',
-                    message: 'Hey welcome into the fractif Team! 🔥',
+                    message: 'Hey welcome into the fractif team! 🔥',
                     color: 'green',
                     icon: <IconCheck />,
                     autoClose: true,
@@ -51,7 +55,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
                     title: 'Error',
                     message: 'Something went wrong',
                     color: 'red',
-                    icon: <IconError404 />,
+                    icon: <IconAlertCircle />,
                     autoClose: true,
             })
         }
@@ -60,7 +64,7 @@ export default function NewsletterPopUp({ opened, setOpened }: { opened: boolean
                 title: 'Error',
                 message: 'Something went wrong',
                 color: 'red',
-                icon: <IconError404 />,
+                icon: <IconAlertCircle />,
             });
         }
     }

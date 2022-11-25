@@ -1,5 +1,5 @@
 import { Text, Container, ActionIcon, Group, Image, Input, Title } from '@mantine/core';
-import { IconBrandTwitter, IconBrandDiscord, IconMail, IconArrowNarrowRight, IconCheck, IconError404 } from '@tabler/icons';
+import { IconBrandTwitter, IconBrandDiscord, IconMail, IconArrowNarrowRight, IconCheck, IconAlertCircle } from '@tabler/icons';
 import { TERM_AND_SERVICES_URL, PRIVACY_POLICY_URL, DISCORD_URL, TWITTER_URL, OPENSEA_URL } from '@constants/index';
 import { OpenseaIcon } from '@components/icons';
 import { useStyles } from './index.style';
@@ -48,7 +48,7 @@ export default function Footer() {
             if (res.status === 200) {
                 showNotification({
                     title: 'Sucessfully subscribed',
-                    message: 'Hey welcome into the fractif Team! 🔥',
+                    message: 'Hey welcome into the fractif team! 🔥',
                     color: 'green',
                     icon: <IconCheck />,
                     autoClose: true,
@@ -58,7 +58,7 @@ export default function Footer() {
                     title: 'Error',
                     message: 'Something went wrong',
                     color: 'red',
-                    icon: <IconError404 />,
+                    icon: <IconAlertCircle />,
                     autoClose: true,
                 })
             }
@@ -68,7 +68,7 @@ export default function Footer() {
                 title: 'Error',
                 message: 'Something went wrong',
                 color: 'red',
-                icon: <IconError404 />,
+                icon: <IconAlertCircle />,
             });
         }
     }
