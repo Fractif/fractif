@@ -58,6 +58,7 @@ npx hardhat run --network goerli scripts/deploy/prod.ts
 ### Troubleshooting
 #### `Error: cannot estimate gas; transaction may fail or may require manual gas limit: Transaction reverted and Hardhat couldn't infer the reason.`
 ```js
+// hardhat.config.ts
 networks: {
     hardhat: {
         allowUnlimitedContractSize: true
@@ -67,3 +68,22 @@ networks: {
     }
 }
 ```
+
+#### `Parsing error: Cannot read file '/monorepo/tsconfig.json'`
+In vscode, `settings.json`:
+```json
+"eslint.workingDirectories": [
+    {
+        "pattern": "./apps/*/"
+    },
+    {
+        "pattern": "./packages/*/"
+    }
+]
+```
+
+## DISCLAIMER
+This project is still in early development
+
+## Licence
+Fractif is under the [Business Source License 1.1](./LICENCE)

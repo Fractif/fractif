@@ -19,7 +19,9 @@
     "@mantine/core": "^5.6.3",
     "@mantine/hooks": "^5.6.3",
     "@mantine/next": "^5.6.3",
+    "@next/bundle-analyzer": "^13.0.5",
     "@tabler/icons": "^1.106.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "@web3-react/coinbase-wallet": "^8.0.22-beta.0",
     "@web3-react/core": "^6.1.9",
     "@web3-react/eip1193": "^8.0.0-beta.0",
@@ -36,7 +38,10 @@
     "@web3-react/walletlink-connector": "^6.2.14",
     "dotenv": "^16.0.3",
     "eslint-config-next": "^13.0.1",
+    "fractif-ui": "^0.0.1",
     "next": "^13.0.1",
+    "next-secure-headers": "^2.2.0",
+    "next-transpile-modules": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -54,5 +59,9 @@
     "keyv": "^4.5.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   }
 }
