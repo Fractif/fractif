@@ -1,5 +1,5 @@
 ---
-title: 'Why it could be a good idea to diversify your portfolio with luxury assets?'
+title: 'Why it could be a good strategy to diversify your portfolio with luxury assets?'
 excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.'
 coverImage: '/assets/blog/dynamic-routing/cover.jpg'
 date: '2022-11-16T12:35:07.322Z'
@@ -17,6 +17,7 @@ While some industries struggle a lot recently (EXAMPLE), luxury worldwide groups
 Despite all of this, consumerism is still alive and well, and luxury brands have been able to adapt to a new digital environment and enhance their digital engagement with their customers. 
 
 "With China, it's not a question of demand - the demand is there. But it's a question of how the health situation and the restrictions evolve," Bernard Arnault said. 
+Chinese consumers accounted for 30% of all luxury sales in 2018, according to Bain & Co.
 
 "The momentum for the key markets in North America, Europe and Japan is growing, while China was very advantageous until the end of February," RBC consultants said earlier this month.
 
@@ -27,7 +28,7 @@ As economic disparities increase and younger clientele is targeted, we are witne
 
 ## Winning in the long run
 
-The luxury market is a very resilient one, and has proven to be a good investment in the long run. The pandemic has been a good test for the industry, and it has proven capable of reinvention to emerge even stronger than before. 
+The luxury market is a very resilient one, and has proven to be a good investment in the long run. The pandemic has been a good test for the industry, and it has proven capable of reinvention to emerge even stronger than before. It just seems like these assets are recession-proof.
 
 "We could be affected in the short term, but we're not worried on the long term," said Jean-Jacques Guiony, LVMH's financial director.
 
