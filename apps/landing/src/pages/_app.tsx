@@ -4,6 +4,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { NotificationsProvider } from '@mantine/notifications';
 
 //Fractif-ui 
 import { FractifUiTheme } from "fractif-ui"
@@ -34,11 +35,13 @@ export default function App(props: AppProps) {
         // @ts-ignore
         theme={FractifUiTheme}
       >
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Navbar />
-          <Component {...pageProps} />
-          <Footer />
-        </Web3ReactProvider>
+        <NotificationsProvider>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </Web3ReactProvider>
+        </NotificationsProvider>
       </MantineProvider>
     </>
   );
