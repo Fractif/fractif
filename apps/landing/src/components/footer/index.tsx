@@ -58,8 +58,8 @@ export default function Footer() {
                 </Text>
                 <Group spacing={0} className={classes.social} position="right" noWrap>
                     {
-                        SocialList.map((social) => (
-                            <a href={social.link}>
+                        SocialList.map((social, index) => (
+                            <a href={social.link} key={index}>
                                 <ActionIcon size="lg" className={classes.socialIcons}>
                                     {social.icon}
                                 </ActionIcon>

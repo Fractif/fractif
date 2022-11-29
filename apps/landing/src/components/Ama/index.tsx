@@ -52,7 +52,7 @@ export default function Ama() {
                             <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
                                 {
                                     Questionlist.map((item) => (
-                                        <Accordion.Item className={classes.item} value={item.key}>
+                                        <Accordion.Item className={classes.item} value={item.key} key={item.key}>
                                             <Accordion.Control>{item.title}<span className={classes.blueDot}>?</span></Accordion.Control>
                                             <Accordion.Panel>{item.answer}</Accordion.Panel>
                                         </Accordion.Item>
