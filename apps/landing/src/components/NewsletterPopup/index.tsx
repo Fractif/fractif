@@ -23,7 +23,7 @@ export default function NewsletterPopUp() {
                 opened={opened}
                 onClose={() => setOpened(false)}
                 size={"md"}
-                withCloseButton={false}
+                withCloseButton={true}
             >
                 <Container className={classes.popupContainer}>
                     <Title className={classes.popupTitle}>
