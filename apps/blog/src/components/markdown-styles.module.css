@@ -16,3 +16,13 @@
 .markdown h3 {
   @apply text-2xl mt-8 mb-4 leading-snug;
 }
+
+.markdown p code {
+  padding: .2em .4em;
+  background-color: rgba(110, 118, 129, 0.4);
+  border-radius: 6px;
+}
+
+.markdown a {
+  @apply text-blue-600;
+}
