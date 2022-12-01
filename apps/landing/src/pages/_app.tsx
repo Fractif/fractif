@@ -6,6 +6,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 //Fractif-ui 
+//TODO: Disable fouc with theme loading
 import { FractifUiTheme } from "fractif-ui"
 
 //Components
