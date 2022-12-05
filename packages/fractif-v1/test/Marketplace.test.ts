@@ -4,7 +4,12 @@ import { BigNumber } from 'ethers'
 import { Marketplace, FractifV1 } from '@typechain-types/contracts'
 import { genItemForSale, Item, toBnPowed } from './utils'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { MarketplaceListingState } from '../utils/marketplace'
+
+enum MarketplaceListingState {
+    Active = 0,
+    Sold = 1,
+    Deactivated = 2
+}
 
 describe('Marketplace', () => {
 	let marketplaceInstance: Marketplace;
