@@ -16,4 +16,6 @@ jobs:
       - name: Install 🔧
         run: npm install -w fractif-v1
       - name: Tests 🧪
+        env:
+          GOERLI_PRIVATE_KEY: ${{ secrets.GOERLI_PRIVATE_KEY }}
         run: npm run test -w fractif-v1
