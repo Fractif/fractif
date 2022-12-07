@@ -17,7 +17,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": { 
-      "@typechain-types": ["../typechain-types"]
+      "@typechain-types": ["./typechain-types"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.jsx", "**/*.js", "**/*.json"],
