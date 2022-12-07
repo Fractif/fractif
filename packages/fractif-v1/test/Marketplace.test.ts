@@ -23,13 +23,11 @@ describe('Marketplace', () => {
 	let seller1InitialItemBalance: number,
 		buyer2InitialItemBalance: number,
 		buyer3InitialItemBalance: number;
-	let platformFeePercent: number;
 
 	beforeEach(async () => {
 		[owner, seller, buyer2, buyer3, buyer4] = await ethers.getSigners();
 		const FractifV1 = await ethers.getContractFactory('FractifV1');
 		fractifInstance = (await upgrades.deployProxy(FractifV1)) as FractifV1;
-		const address = '0x0000';
 		const Marketplace = await ethers.getContractFactory('Marketplace');
 		marketplaceInstance = (await upgrades.deployProxy(Marketplace, [
 			fractifInstance.address
@@ -121,35 +119,20 @@ describe('Marketplace', () => {
 
 		it('should keep fees', async () => {
 			await listItem();
+			const sellerBalanceBeforeSale = await ethers.provider.getBalance(seller.address)
 			let listing = await marketplaceInstance.listings(0);
-			const price = listing.price.mul(listing.amount);
-			const platformFee = price.mul(20).div(100);
+			const price: BigNumber = listing.price;
+			const platformFee: BigNumber = price.mul(2).div(100);
 			await marketplaceInstance
 				.connect(buyer2)
 				.buyListing(0, { value: price });
-				expect(await fractifInstance.balanceOf(buyer2.address, item.id))
+			expect(await ethers.provider.getBalance(seller.address))
+				.to.equal(sellerBalanceBeforeSale.add(price.sub(platformFee)));
+			expect(await fractifInstance.balanceOf(buyer2.address, item.id))
 				.to.equal(buyer2InitialItemBalance + 10);
 			listing = await marketplaceInstance.listings(0);
 			expect(listing.state).to.equal(MarketplaceListingState.Sold);
 			expect(await ethers.provider.getBalance(marketplaceInstance.address)).to.equal(platformFee);
-		});
-
-		it('seller should receive funds minus fees', async () => {
-			await listItem();
-			let balanceSellerPostListing = await seller.getBalance();
-			let listing = await marketplaceInstance.listings(0);
-			const price = listing.price.mul(listing.amount);
-			await marketplaceInstance
-				.connect(buyer2)
-				.buyListing(0, { value: price });
-				expect(await fractifInstance.balanceOf(buyer2.address, item.id))
-				.to.equal(buyer2InitialItemBalance + 10);
-			listing = await marketplaceInstance.listings(0);
-			expect(listing.state).to.equal(MarketplaceListingState.Sold);
-			
-			//Calculate fee took by the smartcontract
-			const platformFee = price.mul(20).div(100);
-			expect(await seller.getBalance()).to.equal(balanceSellerPostListing.add(price.sub(platformFee)));
 		});
 
 		it('should be able to reactivate a listing', async () => {
@@ -220,7 +203,7 @@ describe('Marketplace', () => {
 		it('should fail to buy a listing at a price lower than the listing price', async () => {
 			await listItem();
 			const listing = await marketplaceInstance.listings(0);
-			const price = listing.price.mul(listing.amount).sub(1);
+			const price = listing.price.sub(1); // sub 1 wei to make it lower than the listing price
 			await expect(
 				marketplaceInstance
 					.connect(buyer2)
