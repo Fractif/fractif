@@ -6,17 +6,17 @@ import { useStyles } from './index.style';
 const Questionlist = [
     {
         key: "1",
-        title: 'What’s the goal of Fractif',
+        title: 'What’s the goal of Fractif?',
         answer: 'Take this Rolex Pepsi, if Alice wanted to buy only a fraction of it, let’s say 20$, she could either participate in the crowdsale or buy it from Bob on our marketplace.',
     },
     {
         key: "2",
-        title: 'How can I purchase assets tokens',
+        title: 'How can I purchase assets tokens?',
         answer: 'Join our discord & newsletter to stay in touch and know about the upcoming assets.',
     },
     {
         key: "3",
-        title: 'Where can I resell my tokens',
+        title: 'Where can I resell my tokens?',
         answer: 'For the moment you can only resell your tokens via Opensea. Check the roadmap to be alerted of the release of Fractif marketplace.',
     },
     {
@@ -53,7 +53,7 @@ export default function Ama() {
                                 {
                                     Questionlist.map((item) => (
                                         <Accordion.Item className={classes.item} value={item.key} key={item.key}>
-                                            <Accordion.Control>{item.title}<span className={classes.blueDot}>?</span></Accordion.Control>
+                                            <Accordion.Control>{item.title}</Accordion.Control>
                                             <Accordion.Panel>{item.answer}</Accordion.Panel>
                                         </Accordion.Item>
                                     ))
