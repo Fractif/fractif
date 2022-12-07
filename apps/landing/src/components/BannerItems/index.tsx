@@ -104,14 +104,14 @@ export default function BannerItems() {
     return (
         <div className={classes.containerWrapper}>
             <SimpleGrid cols={4} p={10} className={classes.cardFirstRow}>
-                {ListItem.slice(0, 5).map((item) => (
-                    <CardRendering item={item} />
+                {ListItem.slice(0, 5).map((item, index) => (
+                    <CardRendering item={item} key={index} />
                 ))
                 }
             </SimpleGrid>
             <SimpleGrid cols={4} p={10} className={classes.cardSecondRow}>
-                {ListItem.slice(4, 9).map((item) => (
-                    <CardRendering item={item} />
+                {ListItem.slice(4, 9).map((item, index) => (
+                    <CardRendering item={item} key={index} />
                 ))
                 }
             </SimpleGrid>
