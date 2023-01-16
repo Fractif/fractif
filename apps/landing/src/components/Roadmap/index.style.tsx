@@ -14,16 +14,20 @@ export const useStyles = createStyles((theme) => ({
             fontSize: 45,
         },
     },
-
+    subtitle:{
+        [theme.fn.smallerThan('md')]: {
+            fontSize: 12,
+        },
+    },
     blueDot: {
         color: theme.colors.brand[4]
     },
 
     containerTitle: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "left",
-        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "left",
     },
 
     cards:{

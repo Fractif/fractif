@@ -124,12 +124,12 @@ contract Marketplace is
         __Pausable_init();
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         fractifApp = _fractifApp;
-        platformFeePercent = 200; // 20% of the price
+        platformFeePercent = 200; // 2% of the price
     }
 
     /**
      * @notice Calculates the fees that the contract takes
-     * @dev We use 5 decimals for the fees, so 2000 = 20%, 10000 = 100%
+     * @dev We use 5 decimals for the fees, so 200 = 2%, 10000 = 100%
      * @param _price The total price of the tx
      */
     function calculatePlatformFee(uint256 _price)
@@ -137,7 +137,7 @@ contract Marketplace is
         view
         returns (uint256)
     {
-        return ((_price * platformFeePercent) / 10000) * 10**18;
+        return (_price * platformFeePercent) / 10000;
     }
 
     /**
@@ -225,7 +225,7 @@ contract Marketplace is
         if (listings[_listingId].state != ListingStatus.ACTIVE) {
             revert ListingNotActive();
         }
-        if (listings[_listingId].price * listings[_listingId].amount != msg.value) {
+        if (msg.value < listings[_listingId].price) {
             revert InsufficientAmount();
         }
 
@@ -239,11 +239,11 @@ contract Marketplace is
         );
 
         // Calculate & Transfer platfrom fee
-        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].amount);
-        
+        uint256 platformFeeTotal = calculatePlatformFee(listings[_listingId].price);
+    
         // Then we need to transfer the money to the seller
-        (bool successTransfer, ) = address(listings[_listingId].seller).call{value: msg.value - platformFeeTotal}("");
-        if(!successTransfer){ revert TransferFailed();}
+        (bool successTransfer, ) = address(listings[_listingId].seller).call{value: listings[_listingId].price - platformFeeTotal}("");
+        if(!successTransfer){ revert TransferFailed(); }
 
         // Then set the listing as sold
         listings[_listingId].state = ListingStatus.SOLD;
