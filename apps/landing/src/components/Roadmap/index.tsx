@@ -9,7 +9,7 @@ export default function Roadmap() {
     const { width } = useViewportSize();
     return (
         <>
-            <div className={classes.wrapper}>
+            <div className={classes.wrapper} id="roadmap">
                 <Container className={classes.containerTitle}>
                     <Title className={classes.title}>ROADMAP<span className={classes.blueDot}>.</span></Title>
                     <Text className={classes.subtitle}>Detailled roadmap can be found <a href={ROADMAP_URL} style={{fontWeight:800, textDecoration: "none", color:"black"}}>here</a></Text>

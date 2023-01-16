@@ -24,7 +24,7 @@ export default function Team() {
     const { classes } = useStyles();
     return (
         <>
-            <div className={classes.wrapper}>
+            <div className={classes.wrapper} id="team">
                 <Container className={classes.containerTitle}>
                     <Title className={classes.title}>THE TEAM<span className={classes.blueDot}>.</span></Title>
                 </Container>
