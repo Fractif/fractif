@@ -36,7 +36,7 @@ export default function Ama() {
     const { classes } = useStyles();
     return (
         <>
-            <div className={classes.wrapperbannerComponent}>
+            <div className={classes.wrapperbannerComponent} id="ama">
                 <Container className={classes.containerBannerComponent}>
                     <Title className={classes.titleBannerComponent}>AMA<span className={classes.blueDot}>.</span></Title>
                 </Container>

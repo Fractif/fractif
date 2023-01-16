@@ -22,4 +22,11 @@ export const useStyles = createStyles((theme) => ({
     blueDot: {
         color: theme.colors.brand[4]
     },
+    navlink: {
+        color: theme.colors.gray[7],
+        textDecoration: 'none',
+        '&:hover': {
+            color: theme.colors.gray[8],
+        },
+    }
 }));

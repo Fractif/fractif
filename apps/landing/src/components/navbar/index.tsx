@@ -7,14 +7,30 @@ import {
     Drawer,
     ScrollArea,
     Container,
-    Text
+    Text,
+    Stack
 } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useDisclosure } from '@mantine/hooks';
-import SelectWalletModal from '@components/wallet/ModalConnect';
 import { useStyles } from './index.style';
 
+const NavbarLink = ({ children, href , closeDrawer}: { children: React.ReactNode; href: string; closeDrawer: () => void }) => {
+    const { classes } = useStyles();
+    return (
+        <a href={href} className={classes.navlink} onClick={closeDrawer}>
+            <Text>{children}</Text>
+        </a>
+    )
+}
 
+const NavbarLinks = ({closeDrawer}: {closeDrawer: () => void}) => (
+    <>
+        <NavbarLink href="#roi-calculator" closeDrawer={closeDrawer}>ROI Calculator</NavbarLink>
+        <NavbarLink href="#roadmap" closeDrawer={closeDrawer}>Roadmap</NavbarLink>
+        <NavbarLink href="#team" closeDrawer={closeDrawer}>The team</NavbarLink>
+        <NavbarLink href="#ama" closeDrawer={closeDrawer}>FAQ</NavbarLink>
+    </>
+)
 
 export default function Navbar() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -26,12 +42,12 @@ export default function Navbar() {
             <Header height={60} px="md" className={classes.header}>
                 <Group position="apart" sx={{ height: '100%' }}>
                     <Text className={classes.logo}>
-                        Fractif<span className={classes.blueDot}>.</span>
+                        fractif<span className={classes.blueDot}>.</span>
                     </Text>
                     {
                         width > theme.breakpoints.sm ?
                             <Group>
-                                <SelectWalletModal />
+                                <NavbarLinks closeDrawer={closeDrawer} />
                             </Group> :
                             <Burger opened={drawerOpened} onClick={toggleDrawer} />
                     }
@@ -50,9 +66,9 @@ export default function Navbar() {
                 <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
                     <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
-                    <Group position="center" grow pb="xl" px="md">
-                        <SelectWalletModal />
-                    </Group>
+                    <Stack pb="xl" px="md">
+                        <NavbarLinks closeDrawer={closeDrawer} />
+                    </Stack>
                 </ScrollArea>
             </Drawer>
         </Container>
