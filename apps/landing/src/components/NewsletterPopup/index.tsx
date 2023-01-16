@@ -77,8 +77,7 @@ export default function NewsletterPopUp({ opened, setOpened }: INewsletterPopup)
                 opened={opened}
                 onClose={() => setOpened(false)}
                 size={"md"}
-                withCloseButton={false}
-                transitionDuration={500}
+                withCloseButton={true}
             >
                 <Container className={classes.popupContainer}>
                     <Title className={classes.popupTitle}>

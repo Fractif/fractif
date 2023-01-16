@@ -17,11 +17,11 @@ export default function Roadmap() {
             </div>
             {
                 width > theme.breakpoints.md ?
-                    <Container >
+                    <Container>
                         <Image src={"./roadmap-desktop.svg"} alt="roadmap" />
                     </Container>
                     :
-                    <Container >
+                    <Container>
                         <Image src={"./roadmap-mobile.svg"} alt="roadmap" />
                     </Container>
             }
